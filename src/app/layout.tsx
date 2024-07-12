@@ -3,6 +3,11 @@ import "@/css/global.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import Header from "@/components/ui/Header";
+import { AppContextProvider } from "@/contexts/app.contexts";
+import { NextAuthProvider } from "@/utils/next-auth/next-auth-providers";
+import ReactQueryProviders from "@/utils/react-query/react-query-provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,7 +22,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="w-full h-full">
+          <ReactQueryProviders>
+            <AppContextProvider>
+              <NextAuthProvider>
+                <Header />
+                {children}
+              </NextAuthProvider>
+            </AppContextProvider>
+          </ReactQueryProviders>
+        </div>
+      </body>
     </html>
   );
 }
