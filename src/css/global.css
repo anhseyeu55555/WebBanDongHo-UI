@@ -7,3 +7,9 @@
     @apply text-xl lg:text-4xl font-bold;
   }
 }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

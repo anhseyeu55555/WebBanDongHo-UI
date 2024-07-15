@@ -173,9 +173,9 @@ export const SearchCustom = (props: Props) => {
         )} */}
       </Link>
 
-      <div className="lg:hidden block relative" onClick={() => console.log("")}>
+      {/* <div className="lg:hidden block relative" onClick={() => console.log("")}>
         <BellIcon className="cursor-pointer [&>path]:stroke-black lg:hidden block" />
-      </div>
+      </div> */}
     </div>
   );
 };

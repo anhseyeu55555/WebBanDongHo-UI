@@ -10,7 +10,7 @@ import UserInformation from "../UserInformation";
 export const Topbar = () => {
   return (
     <>
-      <div className="w-full h-[120px] bg-[#1F4FE0] px-4 lg:px-[60px] xl:px-[72px]">
+      <div className="w-full h-[120px] bg-primary px-4 lg:px-[60px] xl:px-[72px]">
         <div className="container mx-auto h-full">
           <div className="flex justify-between items-center h-full ">
             <Link href={"/"}>
@@ -20,6 +20,7 @@ export const Topbar = () => {
                 width={203}
                 height={84}
                 quality="100"
+                className="max-w-[150px] max-h-[75px] object-cover"
               />
             </Link>
 

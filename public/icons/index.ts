@@ -1,11 +1,13 @@
 export { default as BellIcon } from "./icon_bell.svg";
 export { default as CartIcon } from "./icon_cart.svg";
 export { default as CheckIcon } from "./icon_checked.svg";
+export { default as ChevronRightIcon } from "./icon_chervon-right.svg";
 export { default as ChevronDownIcon } from "./icon_chevron-down.svg";
 export { default as ChevronDownBoldIcon } from "./icon_chevron-down-bold.svg";
 export { default as CloseIcon } from "./icon_close.svg";
 export { default as ErrorIcon } from "./icon_error.svg";
 export { default as HiddenPasswordIcon } from "./icon_hidden-password.svg";
+export { default as MenuIcon } from "./icon_menu.svg";
 export { default as SearchIcon } from "./icon_search.svg";
 export { default as ShowPasswordIcon } from "./icon_show-password.svg";
 export { default as UserIcon } from "./icon_user.svg";
