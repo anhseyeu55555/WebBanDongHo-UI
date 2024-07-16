@@ -4,9 +4,12 @@ export interface LoginFormType {
 }
 
 export interface RegisterFormType {
-  email: string;
+  username: string;
   password: string;
+  email: string;
+  diachi: string;
+  gioitinh: string;
+  sdt: string;
+  hoten: string;
   passwordConfirmation: string;
-  phone: string;
-  fullname: string;
 }

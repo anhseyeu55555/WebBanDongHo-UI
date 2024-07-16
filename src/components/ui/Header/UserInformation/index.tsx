@@ -1,8 +1,10 @@
 "use client";
 
+import { deleteCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { useContext } from "react";
 
 import { DropdownCustom } from "@/components/form/DropDownCustom";
@@ -33,71 +35,60 @@ export const listMenuAuth: OptionSelect[] = [
 
 const UserInformation = () => {
   const { state, dispatch } = useContext(AppContext);
-  // const { status: loginStatus } = useSession();
-  // const isAuthenticated = handleIsAuthenticated(loginStatus);
+  const { status: loginStatus, data } = useSession();
+
+  const isAuthenticated = handleIsAuthenticated(loginStatus);
   //   const { data: profile } = useQueryProfile(isAuthenticated);
   const router = useRouter();
 
-  // if (loginStatus === "loading") return <Loading isCenter width="w-[56px]" />;
+  if (loginStatus === "loading") return <Loading isCenter width="w-[56px]" />;
 
-  // if (isAuthenticated)
-  //   return (
-  //     <>
-  //       <div className="relative lg:block hidden">
-  //         <BellIcon
-  //           className="cursor-pointer "
-  //           onClick={() => {
-  //             router.push("/account/notification");
-  //           }}
-  //         />
-  //       </div>
+  if (isAuthenticated)
+    return (
+      <>
+        <div className="relative lg:block hidden">
+          <BellIcon
+            className="cursor-pointer "
+            onClick={() => {
+              router.push("/account/notification");
+            }}
+          />
+        </div>
 
-  //       <Link href={"/cart"} className="lg:block hidden">
-  //         <div className="flex items-center cursor-pointer">
-  //           <CartIcon quantity={10} />
-  //         </div>
-  //       </Link>
-  //       <div className="flex justify-start items-center cursor-pointer">
-  //         <DropdownCustom
-  //           LabelComponent={() => (
-  //             <div className={"flex h-full items-center gap-2"}>
-  //               {/* {profile?.avatar ? ( */}
-  //               {false ? (
-  //                 <div className="w-8 h-8 relative flex-shrink-0">
-  //                   <Image
-  //                     src={"accaca"}
-  //                     alt=""
-  //                     fill
-  //                     className=" rounded-full object-cover object-center"
-  //                   />
-  //                 </div>
-  //               ) : (
-  //                 <UserAuthIcon />
-  //               )}
+        <Link href={"/cart"} className="lg:block hidden">
+          <div className="flex items-center cursor-pointer">
+            <CartIcon quantity={0} />
+          </div>
+        </Link>
+        <div className="flex justify-start items-center cursor-pointer">
+          <DropdownCustom
+            LabelComponent={() => (
+              <div className={"flex h-full items-center gap-2"}>
+                {/* {profile?.avatar ? ( */}
 
-  //               <ChevronDownIcon fill="white" className="md:block hidden" />
-  //             </div>
-  //           )}
-  //           listOptions={listMenuAuth}
-  //           onClickItemMenu={(option: OptionSelect) => {
-  //             if (option.value === "signout") {
-  //               signOut();
-  //               // deleteCookie("token");
-  //               // deleteCookie("cart");
-  //               // deleteCookie("payments");
-  //             }
+                <UserAuthIcon />
 
-  //             if (option.value === "profile") {
-  //               router.push("/account/account-profile");
-  //             }
-  //           }}
-  //           isCheckIcon={false}
-  //           styleMenuItem="px-6 py-4 w-[210px]"
-  //           styleOptionLabel="text-sm font-normal"
-  //         />
-  //       </div>
-  //     </>
-  //   );
+                <ChevronDownIcon fill="white" className="md:block hidden" />
+              </div>
+            )}
+            listOptions={listMenuAuth}
+            onClickItemMenu={(option: OptionSelect) => {
+              if (option.value === "signout") {
+                signOut();
+                deleteCookie("username");
+              }
+
+              if (option.value === "profile") {
+                router.push("/account/account-profile");
+              }
+            }}
+            isCheckIcon={false}
+            styleMenuItem="px-6 py-4 w-[210px]"
+            styleOptionLabel="text-sm font-normal"
+          />
+        </div>
+      </>
+    );
 
   return (
     <>
@@ -112,7 +103,7 @@ const UserInformation = () => {
       </button>
       <Link href={"/cart"} className="lg:block hidden">
         <div className="flex items-center cursor-pointer">
-          <CartIcon quantity={10} />
+          <CartIcon quantity={0} />
         </div>
       </Link>
     </>
