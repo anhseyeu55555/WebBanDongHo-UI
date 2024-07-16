@@ -1,15 +1,40 @@
+"use client";
+
+import { useQueryGetAllProduct } from "@/query/product/queryHooksProduct";
+import { ProductType } from "@/types/product";
+
 import { BannerHome } from "./Banner";
 import { SectionProduct } from "./SectionProduct";
 
 const HomePage = () => {
-  return (
-    <div className="w-full h-full pt-4 lg:pt-[235px] bg-gray-10">
-      <BannerHome />
+  const { data: listProduct } = useQueryGetAllProduct();
 
-      <SectionProduct products={[]} title="Sản phẩm mới" />
-      <SectionProduct products={[]} title="Sản phẩm bán chạy nhất" />
-      <SectionProduct products={[]} title="Sản phẩm khuyến mãi" />
-    </div>
+  return (
+    <>
+      <div className="w-full h-full pt-4 lg:pt-[175px]  bg-gray-10">
+        <BannerHome />
+      </div>
+
+      <div className="w-full h-full pt-4 lg:pt-20  bg-gray-10">
+        <SectionProduct
+          products={listProduct as ProductType[]}
+          title="Sản phẩm mới"
+        />
+      </div>
+
+      <div className="w-full h-full pt-4 lg:pt-20  bg-gray-10">
+        <SectionProduct
+          products={listProduct as ProductType[]}
+          title="Sản phẩm bán chạy nhất"
+        />
+      </div>
+      <div className="w-full h-full pt-4 lg:pt-20  bg-gray-10">
+        <SectionProduct
+          products={listProduct as ProductType[]}
+          title="Sản phẩm khuyến mãi"
+        />
+      </div>
+    </>
   );
 };
 

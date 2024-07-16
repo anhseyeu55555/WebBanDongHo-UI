@@ -29,7 +29,7 @@ const listImageCarousels: ImageCarouselType[] = [
 export const BannerHome = () => {
   return (
     <PageWrapper backgroundColor="bg-white" style="mb-[16px]">
-      <div className=" lg:mb-20 lg:py-10 flex flex-col">
+      <div className=" lg:mb-10 lg:py-10 flex flex-col">
         <div className="flex flex-col">
           <div className="w-full  h-auto">
             <SliderCarousel

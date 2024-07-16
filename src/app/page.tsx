@@ -1,12 +1,34 @@
+import { dehydrate } from "@tanstack/react-query";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import HomePage from "@/components/ui/Page/HomePage";
+import { getAllProductQueryFn } from "@/query/product/queryFnsProduct";
+import { QueryKeysProduct } from "@/query/product/queryKeysProduct";
+import getQueryClient from "@/utils/react-query/getQueryClient";
+import ReactQueryHydrate from "@/utils/react-query/hydrate.client";
 
 export const metadata: Metadata = {
   title: "Trang chủ - Xe đạp",
   description: "Xe đạp Việt Nam",
 };
 
-export default function Home() {
-  return <HomePage />;
+export default async function Home() {
+  const queryClient = getQueryClient();
+
+  try {
+    await queryClient.fetchQuery([QueryKeysProduct.GET_ALL_PRODUCT], () =>
+      getAllProductQueryFn(),
+    );
+  } catch (error) {
+    notFound();
+  }
+
+  const dehydratedState = dehydrate(queryClient);
+
+  return (
+    <ReactQueryHydrate state={dehydratedState}>
+      <HomePage />
+    </ReactQueryHydrate>
+  );
 }

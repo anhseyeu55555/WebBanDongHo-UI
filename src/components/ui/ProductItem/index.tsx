@@ -3,10 +3,13 @@
 import clsx from "clsx";
 import Link from "next/link";
 
+import { ConvertPrice } from "@/helpers/convert";
+import { ProductType } from "@/types/product";
+
 import { ImageCustom } from "../ImageCustom";
 
 interface Props {
-  //   product: any;
+  product: ProductType;
   styleImageProduct?: string;
   styleWrapperProduct?: string;
   heightImage: number;
@@ -16,7 +19,7 @@ interface Props {
 export const ProductItem = (props: Props) => {
   const {
     heightImage,
-    // product,
+    product,
     widthImage,
     styleImageProduct,
     styleWrapperProduct,
@@ -31,9 +34,9 @@ export const ProductItem = (props: Props) => {
         className={`${styleWrapperProduct} flex flex-col justify-center gap-4`}
       >
         <div className={`h-full w-full ${styleImageProduct} relative`}>
-          <Link href={`#`}>
+          <Link href={`/products/${product.slug}`}>
             <ImageCustom
-              src={"/images/new-product.png"}
+              src={product.image}
               alt={"Product"}
               height={heightImage}
               width={widthImage}
@@ -44,15 +47,15 @@ export const ProductItem = (props: Props) => {
 
         <div className="w-full flex flex-col justify-center gap-2 p-4">
           <Link
-            href={`#`}
+            href={`/products/${product.slug}`}
             className="text-md font-bold line-clamp-2 min-h-[48px]"
           >
-            Xe đạp vượt địa hình
+            {product.tensp}
           </Link>
 
-          <Link href={`#`}>
+          <Link href={`/products/${product.slug}`}>
             <div className="flex flex-row justify-between items-center flex-wrap">
-              800.000đ
+              {ConvertPrice(product.dongia)}
             </div>
           </Link>
 
