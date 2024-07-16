@@ -1,7 +1,6 @@
 "use client";
 
 import { deleteCookie } from "cookies-next";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
@@ -11,10 +10,10 @@ import { DropdownCustom } from "@/components/form/DropDownCustom";
 import { AppContext } from "@/contexts/app.contexts";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
 import { handleOpenModal } from "@/helpers/handleModal";
+import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
 import { OptionSelect } from "@/types/select";
 
 import {
-  BellIcon,
   ChevronDownIcon,
   UserAuthIcon,
   UserIcon,
@@ -38,7 +37,10 @@ const UserInformation = () => {
   const { status: loginStatus, data } = useSession();
 
   const isAuthenticated = handleIsAuthenticated(loginStatus);
-  //   const { data: profile } = useQueryProfile(isAuthenticated);
+  const { data: profile } = useQueryGetProfile(
+    (data?.user.name as string) || "",
+    isAuthenticated,
+  );
   const router = useRouter();
 
   if (loginStatus === "loading") return <Loading isCenter width="w-[56px]" />;
@@ -46,14 +48,14 @@ const UserInformation = () => {
   if (isAuthenticated)
     return (
       <>
-        <div className="relative lg:block hidden">
+        {/* <div className="relative lg:block hidden">
           <BellIcon
             className="cursor-pointer "
             onClick={() => {
               router.push("/account/notification");
             }}
           />
-        </div>
+        </div> */}
 
         <Link href={"/cart"} className="lg:block hidden">
           <div className="flex items-center cursor-pointer">
@@ -101,11 +103,16 @@ const UserInformation = () => {
           Đăng nhập
         </span>
       </button>
-      <Link href={"/cart"} className="lg:block hidden">
+      <div
+        onClick={() => {
+          handleOpenModal(state, dispatch, "Signin");
+        }}
+        className="lg:block hidden"
+      >
         <div className="flex items-center cursor-pointer">
           <CartIcon quantity={0} />
         </div>
-      </Link>
+      </div>
     </>
   );
 };

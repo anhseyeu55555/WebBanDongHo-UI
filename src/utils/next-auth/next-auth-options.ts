@@ -1,5 +1,9 @@
+import { cookies } from "next/headers";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+import { AuthService } from "@/services/auth";
+import { LoginResponseType } from "@/types/profile";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -19,31 +23,30 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        return {
-          id: username,
-          name: username,
-          password: password,
-        };
-        // try {
-        //   const response = await AuthService.signInWithCredentials({
-        //     username,
-        //     password,
-        //   });
+        try {
+          const response = await AuthService.signInWithCredentials({
+            username,
+            password,
+          });
 
-        //   const dataLogin: LoginResponseType = response.data;
+          const dataLogin: LoginResponseType = response.data;
 
-        //   cookies().set("token", dataLogin.accessToken, {
-        //     maxAge: 24 * 60 * 60 * 365,
-        //   });
+          if (dataLogin.quyen != 2) {
+            throw new Error("invalid credentials");
+          }
 
-        //   return {
-        //     id: dataLogin.userId,
-        //     name: dataLogin.fullname,
-        //     ...dataLogin,
-        //   };
-        // } catch (error) {
-        //   throw new Error("invalid credentials");
-        // }
+          cookies().set("username", dataLogin.username, {
+            maxAge: 24 * 60 * 60 * 365,
+          });
+
+          return {
+            id: dataLogin.username,
+            name: dataLogin.username,
+            ...dataLogin,
+          };
+        } catch (error) {
+          throw new Error("invalid credentials");
+        }
       },
     }),
   ],
