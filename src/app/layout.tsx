@@ -1,4 +1,7 @@
 import "@/css/global.css";
+import "../css/swiper.css";
+import "swiper/css";
+import "swiper/css/pagination";
 
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";

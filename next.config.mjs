@@ -9,7 +9,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["http://res.cloudinary.com"],
+    domains: ["res.cloudinary.com"],
     remotePatterns: [
       {
         protocol: "https",
