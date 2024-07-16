@@ -1,5 +1,5 @@
-import { SectionProduct } from "../../SectionProduct";
 import { BannerHome } from "./Banner";
+import { SectionProduct } from "./SectionProduct";
 
 const HomePage = () => {
   return (

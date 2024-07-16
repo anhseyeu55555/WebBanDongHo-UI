@@ -1,7 +1,7 @@
 "use client";
 
-import { PageWrapper } from "../PageWrapper";
-import { ProductItem } from "../ProductItem";
+import { PageWrapper } from "../../../PageWrapper";
+import { ProductItem } from "../../../ProductItem";
 
 interface Props {
   products: any[];

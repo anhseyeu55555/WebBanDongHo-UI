@@ -10,11 +10,7 @@ import { listDropDownSearch, SearchValueType } from "@/constant/header";
 import { toLowerCaseNonAccentVietnamese } from "@/helpers/handleRemoveAccents";
 import { OptionSelect } from "@/types/select";
 
-import {
-  BellIcon,
-  ChevronDownBoldIcon,
-  SearchIcon,
-} from "../../../public/icons";
+import { ChevronDownBoldIcon, SearchIcon } from "../../../public/icons";
 import CartIcon from "../ui/Header/CartIcon";
 import { DropdownCustom } from "./DropDownCustom";
 
@@ -49,7 +45,11 @@ export const SearchCustom = (props: Props) => {
 
   const router = useRouter();
 
-  const { control, handleSubmit } = useForm<SearchForm>();
+  const { control, handleSubmit } = useForm<SearchForm>({
+    defaultValues: {
+      search: "",
+    },
+  });
 
   const [value, setValue] = useState<string>("");
 
@@ -57,7 +57,7 @@ export const SearchCustom = (props: Props) => {
     switch (selectedSearch.value) {
       case SearchValueType.SanPham:
         router.push(
-          `/sanpham${
+          `/products/search${
             search ? `?search=${toLowerCaseNonAccentVietnamese(search)}` : ""
           }`,
         );
@@ -65,7 +65,7 @@ export const SearchCustom = (props: Props) => {
         break;
       case SearchValueType.DanhMuc:
         router.push(
-          `/danhmuc?${
+          `/category/search?${
             search ? `search=${toLowerCaseNonAccentVietnamese(search)}` : ""
           }`,
         );
@@ -73,7 +73,7 @@ export const SearchCustom = (props: Props) => {
         break;
       case SearchValueType.ThuongHieu:
         router.push(
-          `/thuonghieu?${
+          `/brand/search?${
             search ? `search=${toLowerCaseNonAccentVietnamese(search)}` : ""
           }`,
         );
@@ -81,10 +81,8 @@ export const SearchCustom = (props: Props) => {
         break;
       case SearchValueType.NhaCungCap:
         router.push(
-          `/nhacungcap${
-            search
-              ? `/search?query=${toLowerCaseNonAccentVietnamese(search)}`
-              : ""
+          `/supplier/search${
+            search ? `?query=${toLowerCaseNonAccentVietnamese(search)}` : ""
           }`,
         );
 
@@ -95,6 +93,7 @@ export const SearchCustom = (props: Props) => {
   };
 
   const onSubmit = (data: SearchForm) => {
+    if (!data.search.trim()) return;
     setValue(data.search);
     handleRedirect(data.search);
   };
@@ -137,7 +136,7 @@ export const SearchCustom = (props: Props) => {
                   render={({ field: { onChange, value } }) => (
                     <Combobox.Input
                       type={"text"}
-                      placeholder={"Tìm kiếm sự kiện, Tour, Sản phẩm..."}
+                      placeholder={"Tìm kiếm sản phẩm..."}
                       value={value}
                       onChange={(event) => {
                         const value = event.target.value;
