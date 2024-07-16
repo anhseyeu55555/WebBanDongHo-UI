@@ -11,7 +11,7 @@ const Header = () => {
         <Topbar />
         <Navbar />
       </div>
-      <TopbarMobile />/
+      <TopbarMobile />
     </>
   );
 };

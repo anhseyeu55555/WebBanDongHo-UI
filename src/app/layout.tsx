@@ -3,6 +3,7 @@ import "@/css/global.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
+import Footer from "@/components/ui/Footer";
 import Header from "@/components/ui/Header";
 import { Modal } from "@/components/ui/Modal";
 import { AppContextProvider } from "@/contexts/app.contexts";
@@ -33,6 +34,7 @@ export default function RootLayout({
               <NextAuthProvider>
                 <Header />
                 {children}
+                <Footer />
                 <Modal />
               </NextAuthProvider>
             </AppContextProvider>

@@ -1,6 +1,7 @@
 export { default as BellIcon } from "./icon_bell.svg";
 export { default as CartIcon } from "./icon_cart.svg";
 export { default as CheckIcon } from "./icon_checked.svg";
+export { default as ChevronLeftIcon } from "./icon_chervon-left.svg";
 export { default as ChevronRightIcon } from "./icon_chervon-right.svg";
 export { default as ChevronDownIcon } from "./icon_chevron-down.svg";
 export { default as ChevronDownBoldIcon } from "./icon_chevron-down-bold.svg";
