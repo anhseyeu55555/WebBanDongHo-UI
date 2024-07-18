@@ -5,6 +5,9 @@ import { ProductType } from "@/types/product";
 import {
   getAllProductQueryFn,
   getDetailProductQueryFn,
+  getProductByBrandQueryFn,
+  getProductByCategoryQueryFn,
+  getProductBySupplierQueryFn,
 } from "./queryFnsProduct";
 import { QueryKeysProduct } from "./queryKeysProduct";
 
@@ -45,6 +48,33 @@ export const useQueryGetAllProduct = () =>
   useQuery<ProductType[]>({
     queryKey: [QueryKeysProduct.GET_ALL_PRODUCT],
     queryFn: () => getAllProductQueryFn(),
+    placeholderData: initialProductList,
+    staleTime: 1000 * 60 * 5,
+    keepPreviousData: true,
+  });
+
+export const useQueryGetProductByCategory = (category: string) =>
+  useQuery<ProductType[]>({
+    queryKey: [QueryKeysProduct.GET_PRODUCT_CATEGORY],
+    queryFn: () => getProductByCategoryQueryFn(category),
+    placeholderData: initialProductList,
+    staleTime: 1000 * 60 * 5,
+    keepPreviousData: true,
+  });
+
+export const useQueryGetProductByBrand = (brand: string) =>
+  useQuery<ProductType[]>({
+    queryKey: [QueryKeysProduct.GET_PRODUCT_BRAND],
+    queryFn: () => getProductByBrandQueryFn(brand),
+    placeholderData: initialProductList,
+    staleTime: 1000 * 60 * 5,
+    keepPreviousData: true,
+  });
+
+export const useQueryGetProductBySupplier = (supplier: string) =>
+  useQuery<ProductType[]>({
+    queryKey: [QueryKeysProduct.GET_PRODUCT_SUPPLIER],
+    queryFn: () => getProductBySupplierQueryFn(supplier),
     placeholderData: initialProductList,
     staleTime: 1000 * 60 * 5,
     keepPreviousData: true,
