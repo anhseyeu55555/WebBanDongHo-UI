@@ -1,7 +1,16 @@
-"use client";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
-const CartPage = () => {
-  return <>Cart Page</>;
+import CartPage from "@/components/ui/Page/CartPage";
+import { authOptions } from "@/utils/next-auth/next-auth-options";
+
+const Page = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/");
+  }
+  return <CartPage />;
 };
 
-export default CartPage;
+export default Page;

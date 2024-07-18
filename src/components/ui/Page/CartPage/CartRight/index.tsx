@@ -1,0 +1,3 @@
+export const CartRight = () => {
+  return <></>;
+};

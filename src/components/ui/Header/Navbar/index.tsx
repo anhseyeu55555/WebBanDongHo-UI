@@ -157,7 +157,7 @@ export const Navbar = () => {
       <div className="container mx-auto px-0 xl:px-[20px] 2xl:px-[130px] py-4">
         <div className="flex items-center lg:gap-10 xl:gap-24">
           <div className="flex justify-between w-full ">
-            {updateListNavbar.map((item, index) => {
+            {updateListNavbar.map((item) => {
               if (!item.children || item.children.length === 0)
                 return (
                   <div

@@ -1,6 +1,7 @@
 export { default as BellIcon } from "./icon_bell.svg";
 export { default as CartIcon } from "./icon_cart.svg";
 export { default as CheckIcon } from "./icon_checked.svg";
+export { default as CheckedBoxIcon } from "./icon_checked-box.svg";
 export { default as NotCheckedRadioIcon } from "./icon_checked-radio-not.svg";
 export { default as ChervonDownUserIcon } from "./icon_chervon-down-user.svg";
 export { default as ChevronLeftIcon } from "./icon_chervon-left.svg";
@@ -15,6 +16,7 @@ export { default as MenuIcon } from "./icon_menu.svg";
 export { default as CheckedRadioIcon } from "./icon_radio-checked.svg";
 export { default as SearchIcon } from "./icon_search.svg";
 export { default as ShowPasswordIcon } from "./icon_show-password.svg";
+export { default as TrashIcon } from "./icon_trash.svg";
 export { default as UserIcon } from "./icon_user.svg";
 export { default as UserAuthIcon } from "./icon_user-auth.svg";
 export { default as UserOrderIcon } from "./icon_user-order.svg";

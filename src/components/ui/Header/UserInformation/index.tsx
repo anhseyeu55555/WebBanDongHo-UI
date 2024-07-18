@@ -10,6 +10,7 @@ import { DropdownCustom } from "@/components/form/DropDownCustom";
 import { AppContext } from "@/contexts/app.contexts";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
 import { handleOpenModal } from "@/helpers/handleModal";
+import { useQueryGetAllCartUser } from "@/query/cart/queryHooksCart";
 import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
 import { OptionSelect } from "@/types/select";
 
@@ -41,6 +42,8 @@ const UserInformation = () => {
     (data?.user.name as string) || "",
     isAuthenticated,
   );
+  const { data: cart } = useQueryGetAllCartUser(profile?.makh || "");
+
   const router = useRouter();
 
   if (loginStatus === "loading") return <Loading isCenter width="w-[56px]" />;
@@ -59,7 +62,7 @@ const UserInformation = () => {
 
         <Link href={"/cart"} className="lg:block hidden">
           <div className="flex items-center cursor-pointer">
-            <CartIcon quantity={0} />
+            <CartIcon quantity={cart?.length || 0} />
           </div>
         </Link>
         <div className="flex justify-start items-center cursor-pointer">
@@ -110,7 +113,7 @@ const UserInformation = () => {
         className="lg:block hidden"
       >
         <div className="flex items-center cursor-pointer">
-          <CartIcon quantity={0} />
+          <CartIcon quantity={cart?.length || 0} />
         </div>
       </div>
     </>
