@@ -1,9 +1,18 @@
+"use client";
+
+import { useSession } from "next-auth/react";
 import { Dispatch, SetStateAction } from "react";
 
 import Divider from "@/components/ui/Divider";
+import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
+import { openToastError, openToastSuccess } from "@/helpers/toast";
+import { QueryKeysCart } from "@/query/cart/queryKeysCart";
+import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
+import { cartService } from "@/services/cart";
 import { CartType } from "@/types/cart";
+import { queryClient } from "@/utils/react-query/react-query-provider";
 
-import { CheckedBoxIcon, TrashIcon } from "../../../../../../public/icons";
+import { TrashIcon } from "../../../../../../public/icons";
 import { ItemProductCheckout } from "./ItemProductCheckout";
 
 interface Props {
@@ -14,8 +23,50 @@ interface Props {
 
 const styleTextHead = "font-medium text-md text-[#242424] lg:block hidden";
 
+export const returnIdCart = (item: CartType): string => {
+  return `${item.id.makh}-${item.id.masp}`;
+};
+
 export const CartLeft = (props: Props) => {
   const { cart, listChecked, setListChecked } = props;
+
+  const { status: loginStatus, data } = useSession();
+
+  const isAuthenticated = handleIsAuthenticated(loginStatus);
+  const { data: profile } = useQueryGetProfile(
+    (data?.user.name as string) || "",
+    isAuthenticated,
+  );
+
+  const handleRemoveAll = async () => {
+    try {
+      await cartService.deleteAllCartUser(profile?.makh || "");
+      queryClient.invalidateQueries([
+        QueryKeysCart.GET_ALL_CART_USER,
+        profile?.makh,
+      ]);
+      openToastSuccess("Đã xoá hết sản phẩm trong giỏ hàng");
+    } catch (error) {
+      openToastError("Đã xảy ra lỗi, vui lòng thử lại!");
+    }
+  };
+
+  const handleCheckedItem = (item: CartType) => {
+    const findItemChecked = listChecked.find(
+      (checked) => checked === returnIdCart(item),
+    );
+
+    if (findItemChecked) {
+      const removeChecked = listChecked.filter(
+        (checked) => checked !== returnIdCart(item),
+      );
+
+      setListChecked(removeChecked);
+      return;
+    }
+
+    setListChecked([...listChecked, returnIdCart(item)]);
+  };
   return (
     <div className="w-full lg:w-[72.5%] h-full flex flex-col gap-[10px]">
       <div className="bg-white w-full h-full rounded-[4px]">
@@ -27,7 +78,6 @@ export const CartLeft = (props: Props) => {
               ) : (
                 <Checkbox />
               )} */}
-              <Checkbox />
             </div>
 
             <p className={"font-medium text-md text-[#242424]"}>
@@ -44,38 +94,34 @@ export const CartLeft = (props: Props) => {
           <div
             className="flex flex-1 cursor-pointer"
             onClick={() => {
-              console.log("remove all");
+              handleRemoveAll();
             }}
           >
             <TrashIcon />
           </div>
         </div>
       </div>
-      {
-        <div className="bg-white w-full h-full rounded-[4px]">
-          <div className="px-4">
-            {cart.map((item: CartType, index: number) => (
-              <div
-                key={`${item.id.makh}-${item.id.masp}`}
-                className="flex flex-col gap-4 my-3"
-              >
-                <ItemProductCheckout
-                  item={item}
-                  listChecked={listChecked}
-                  handleCheckedItem={(item) => {
-                    console.log(item);
-                  }}
-                />
-                {index !== cart.length - 1 ? (
-                  <Divider className="!my-0" />
-                ) : (
-                  <></>
-                )}
-              </div>
-            ))}
-          </div>
+      <div className="bg-white w-full h-full rounded-[4px]">
+        <div className="px-4">
+          {cart.map((item: CartType, index: number) => (
+            <div
+              key={`${item.id.makh}-${item.id.masp}`}
+              className="flex flex-col gap-4 my-3"
+            >
+              <ItemProductCheckout
+                item={item}
+                listChecked={listChecked}
+                handleCheckedItem={handleCheckedItem}
+              />
+              {index !== cart.length - 1 ? (
+                <Divider className="!my-0" />
+              ) : (
+                <></>
+              )}
+            </div>
+          ))}
         </div>
-      }
+      </div>
     </div>
   );
 };

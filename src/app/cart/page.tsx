@@ -10,7 +10,11 @@ const Page = async () => {
   if (!session) {
     redirect("/");
   }
-  return <CartPage />;
+  return (
+    <div className="w-full h-full lg:pt-[235px] bg-gray-10">
+      <CartPage />
+    </div>
+  );
 };
 
 export default Page;

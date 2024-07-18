@@ -4,8 +4,8 @@ import { ImageCustom } from "@/components/ui/ImageCustom";
 import { ConvertPrice } from "@/helpers/convert";
 import { CartType } from "@/types/cart";
 
-import { TrashIcon } from "../../../../../../public/icons";
-import { Checkbox } from ".";
+import { CheckedBoxIcon, TrashIcon } from "../../../../../../public/icons";
+import { Checkbox, returnIdCart } from ".";
 import { CountQuantityProduct } from "./CountQuantityProduct";
 
 interface Props {
@@ -18,6 +18,7 @@ const styleTextItem = "font-medium text-base text-[#242424]";
 
 export const ItemProductCheckout = (props: Props) => {
   const { handleCheckedItem, item, listChecked } = props;
+
   return (
     <div
       className="flex lg:flex-row flex-col lg:items-center gap-2 lg:gap-12"
@@ -30,12 +31,11 @@ export const ItemProductCheckout = (props: Props) => {
           } `}
           onClick={() => handleCheckedItem(item)}
         >
-          {/* {checked.includes(item.id) ? (
+          {listChecked.includes(returnIdCart(item)) ? (
             <CheckedBoxIcon />
           ) : (
             <Checkbox />
-          )} */}
-          <Checkbox />
+          )}
         </div>
 
         <div className="flex items-center gap-2 w-full">
@@ -45,7 +45,7 @@ export const ItemProductCheckout = (props: Props) => {
                 height={70}
                 width={70}
                 alt={item.sanpham.tensp}
-                src={item.sanpham.image[0]}
+                src={item.sanpham.image}
                 className="h-auto w-[70px] aspect-square rounded-lg object-cover object-center"
               />
             </Link>

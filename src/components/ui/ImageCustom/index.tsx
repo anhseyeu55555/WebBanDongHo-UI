@@ -42,19 +42,11 @@ export const ImageCustom = (props: Props) => {
       unoptimized={unoptimized}
       onLoadingComplete={(result) => {
         if (result.naturalWidth === 0) {
-          setSrcImage(
-            isAvatar
-              ? "/images/avatar-default-active.png"
-              : "/images/image-default-active.png",
-          );
+          setSrcImage("/images/image-default.png");
         }
       }}
       onError={() => {
-        setSrcImage(
-          isAvatar
-            ? "/images/avatar-default-active.png"
-            : "/images/image-default-active.png",
-        );
+        setSrcImage("/images/image-default.png");
       }}
       quality={100}
       priority
