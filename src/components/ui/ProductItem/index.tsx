@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 
 import { ConvertPrice } from "@/helpers/convert";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
+import { openToastSuccess } from "@/helpers/toast";
 import { useMutationAddCart } from "@/mutate/cart/hook";
 import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
 import { ProductType } from "@/types/product";
@@ -52,6 +53,7 @@ export const ProductItem = (props: Props) => {
       masp: product.masp,
       soluong: 1,
     });
+    openToastSuccess("Thêm vào giỏ hàng thành công!!");
   };
 
   return (

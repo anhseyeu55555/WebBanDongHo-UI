@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ButtonCustom } from "@/components/form/ButtonCustom";
 import Divider from "@/components/ui/Divider";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
+import { openToastSuccess } from "@/helpers/toast";
 import { useMutationAddCart } from "@/mutate/cart/hook";
 import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
 import { ProductType } from "@/types/product";
@@ -59,6 +60,7 @@ export const ProductDetailRight = (props: Props) => {
       masp: dataProductDetail.masp,
       soluong: quantity,
     });
+    openToastSuccess("Thêm sản phẩm vào giỏ hàng thành công!");
   };
 
   const handleShowButtonPayment = () => {

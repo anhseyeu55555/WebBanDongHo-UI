@@ -14,7 +14,6 @@ export const useMutationAddCart = () =>
     mutationFn: (formData: AddCartForm) => cartService.addCart(formData),
     onSuccess: () => {
       queryClient.invalidateQueries([QueryKeysCart.GET_ALL_CART_USER]);
-      openToastSuccess("Thêm sản phẩm vào giỏ hàng thành công!");
     },
     onError: () => {
       openToastError(

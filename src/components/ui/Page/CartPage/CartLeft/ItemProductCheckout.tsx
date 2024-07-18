@@ -2,7 +2,12 @@ import Link from "next/link";
 
 import { ImageCustom } from "@/components/ui/ImageCustom";
 import { ConvertPrice } from "@/helpers/convert";
+import { openToastError, openToastSuccess } from "@/helpers/toast";
+import { useMutationAddCart } from "@/mutate/cart/hook";
+import { QueryKeysCart } from "@/query/cart/queryKeysCart";
+import { cartService } from "@/services/cart";
 import { CartType } from "@/types/cart";
+import { queryClient } from "@/utils/react-query/react-query-provider";
 
 import { CheckedBoxIcon, TrashIcon } from "../../../../../../public/icons";
 import { Checkbox, returnIdCart } from ".";
@@ -11,6 +16,7 @@ import { CountQuantityProduct } from "./CountQuantityProduct";
 interface Props {
   item: CartType;
   listChecked: string[];
+  // eslint-disable-next-line no-unused-vars
   handleCheckedItem: (item: CartType) => void;
 }
 
@@ -18,6 +24,35 @@ const styleTextItem = "font-medium text-base text-[#242424]";
 
 export const ItemProductCheckout = (props: Props) => {
   const { handleCheckedItem, item, listChecked } = props;
+
+  const { mutate } = useMutationAddCart();
+
+  const handleIncrease = () => {
+    if (item.soluong >= item.sanpham.soluong) return;
+    mutate({
+      makh: item.id.makh,
+      masp: item.id.masp,
+      soluong: 1,
+    });
+  };
+  const handleDecrease = () => {
+    if (item.soluong === 1) return;
+    mutate({
+      makh: item.id.makh,
+      masp: item.id.masp,
+      soluong: -1,
+    });
+  };
+
+  const handleRemoveItem = async () => {
+    try {
+      await cartService.deleteCartItemUser(item.id.makh, item.id.masp);
+      queryClient.invalidateQueries([QueryKeysCart.GET_ALL_CART_USER]);
+      openToastSuccess("Đã xoá sản phẩm thành công!");
+    } catch (error) {
+      openToastError("Đã xảy ra lỗi, vui lòng thử lại sau !!");
+    }
+  };
 
   return (
     <div
@@ -77,7 +112,11 @@ export const ItemProductCheckout = (props: Props) => {
                 </p>
 
                 <div className="lg:hidden block">
-                  <CountQuantityProduct item={item} isTrigger={true} />
+                  <CountQuantityProduct
+                    handleIncrease={handleIncrease}
+                    handleDecrease={handleDecrease}
+                    item={item}
+                  />
                 </div>
               </div>
             </div>
@@ -90,7 +129,11 @@ export const ItemProductCheckout = (props: Props) => {
       </div>
 
       <div className="w-[10%] lg:block hidden">
-        <CountQuantityProduct item={item} isTrigger={true} />
+        <CountQuantityProduct
+          item={item}
+          handleIncrease={handleIncrease}
+          handleDecrease={handleDecrease}
+        />
       </div>
 
       <div
@@ -99,12 +142,7 @@ export const ItemProductCheckout = (props: Props) => {
         {ConvertPrice(100000)}
       </div>
 
-      <div
-        className="lg:block hidden"
-        onClick={() => {
-          console.log("handle remove item cart");
-        }}
-      >
+      <div className="lg:block hidden" onClick={handleRemoveItem}>
         <div className="flex flex-1 cursor-pointer">
           <TrashIcon />
         </div>

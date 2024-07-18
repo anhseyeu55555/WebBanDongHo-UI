@@ -4,20 +4,14 @@ import clsx from "clsx";
 
 import { CartType } from "@/types/cart";
 
-export const CountQuantityProduct = ({
-  item,
-  isTrigger,
-}: {
+interface Props {
   item: CartType;
-  isTrigger: Boolean;
-}) => {
-  const handleIncrease = () => {
-    console.log("increase");
-  };
+  handleIncrease: () => void;
+  handleDecrease: () => void;
+}
 
-  const handleDecrease = () => {
-    console.log("decrease");
-  };
+export const CountQuantityProduct = (props: Props) => {
+  const { item, handleIncrease, handleDecrease } = props;
 
   return (
     <div className="flex items-center h-full gap-4">
