@@ -2,8 +2,13 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 import { ConvertPrice } from "@/helpers/convert";
+import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
+import { useMutationAddCart } from "@/mutate/cart/hook";
+import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
 import { ProductType } from "@/types/product";
 
 import { ImageCustom } from "../ImageCustom";
@@ -24,6 +29,31 @@ export const ProductItem = (props: Props) => {
     styleImageProduct,
     styleWrapperProduct,
   } = props;
+
+  const router = useRouter();
+  const { status: loginStatus, data } = useSession();
+
+  const isAuthenticated = handleIsAuthenticated(loginStatus);
+  const { data: profile } = useQueryGetProfile(
+    (data?.user.name as string) || "",
+    isAuthenticated,
+  );
+
+  const { mutate } = useMutationAddCart();
+
+  const handleBuy = () => {
+    handleAddCart();
+    router.push("/cart");
+  };
+
+  const handleAddCart = () => {
+    mutate({
+      makh: profile?.makh || "",
+      masp: product.masp,
+      soluong: 1,
+    });
+  };
+
   return (
     <div
       className={clsx(
@@ -62,9 +92,7 @@ export const ProductItem = (props: Props) => {
           <div className="flex justify-center lg:justify-end">
             <button
               className="bg-primary px-4 py-2 rounded-lg text-white text-base font-medium"
-              onClick={() => {
-                console.log("abc");
-              }}
+              onClick={handleBuy}
             >
               Mua ngay
             </button>
