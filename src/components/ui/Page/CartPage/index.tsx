@@ -1,20 +1,19 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Loading } from "@/components/ui/Loading";
-import { AppContext } from "@/contexts/app.contexts";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
 import { useQueryGetAllCartUser } from "@/query/cart/queryHooksCart";
 import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
+import { ShippingType } from "@/types/profile";
 
 import { PageWrapper } from "../../PageWrapper";
 import { CartLeft } from "./CartLeft";
 import { CartRight } from "./CartRight";
 
 const CartPage = () => {
-  const { state, dispatch } = useContext(AppContext);
   const { status: loginStatus, data } = useSession();
 
   const isAuthenticated = handleIsAuthenticated(loginStatus);
@@ -22,8 +21,23 @@ const CartPage = () => {
     (data?.user.name as string) || "",
     isAuthenticated,
   );
-  const { data: cart } = useQueryGetAllCartUser(profile?.makh || "");
+
   const [listChecked, setListChecked] = useState<string[]>([]);
+  const [shipping, setShipping] = useState<ShippingType>({
+    diaChi: "",
+    email: "",
+    hoTen: "",
+    sdt: "",
+  });
+
+  const { data: cart } = useQueryGetAllCartUser(profile?.makh || "");
+
+  useEffect(() => {
+    if (!profile) return;
+    if (profile.makh === "") return;
+
+    setShipping({ ...profile });
+  }, [profile]);
 
   if (!cart) return <Loading isCenter height="h-[700px]" />;
 
@@ -42,7 +56,7 @@ const CartPage = () => {
           listChecked={listChecked}
           setListChecked={setListChecked}
         />
-        <CartRight />
+        <CartRight shipping={shipping} setShipping={setShipping} />
       </div>
     </PageWrapper>
   );

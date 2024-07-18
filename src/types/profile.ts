@@ -9,10 +9,17 @@ export interface TaiKhoanType {
 
 export interface ProfileType {
   makh: string;
-  hoTen: string;
   gioiTinh: string;
+  hoTen: string;
   sdt: string;
   diaChi: string;
   email: string;
   taikhoan: TaiKhoanType;
+}
+
+export interface ShippingType {
+  hoTen: string;
+  sdt: string;
+  diaChi: string;
+  email: string;
 }

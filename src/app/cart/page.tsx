@@ -11,7 +11,7 @@ const Page = async () => {
     redirect("/");
   }
   return (
-    <div className="w-full h-full lg:pt-[235px] bg-gray-10">
+    <div className="w-full h-full lg:min-h-[100vh] lg:pt-[235px] bg-gray-10">
       <CartPage />
     </div>
   );

@@ -139,7 +139,7 @@ export const ItemProductCheckout = (props: Props) => {
       <div
         className={`${styleTextItem} text-primary w-[12%] lg:px-0 px-[26px]  whitespace-nowrap`}
       >
-        {ConvertPrice(100000)}
+        {ConvertPrice(item.sanpham.dongia * item.soluong)}
       </div>
 
       <div className="lg:block hidden" onClick={handleRemoveItem}>
