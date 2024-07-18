@@ -5,12 +5,17 @@ import { useEffect, useState } from "react";
 
 import { Loading } from "@/components/ui/Loading";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
+import { openToastError, openToastSuccess } from "@/helpers/toast";
 import { useQueryGetAllCartUser } from "@/query/cart/queryHooksCart";
+import { QueryKeysCart } from "@/query/cart/queryKeysCart";
 import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
+import { orderService } from "@/services/order";
+import { ProductOrderType } from "@/types/order";
 import { ShippingType } from "@/types/profile";
+import { queryClient } from "@/utils/react-query/react-query-provider";
 
 import { PageWrapper } from "../../PageWrapper";
-import { CartLeft } from "./CartLeft";
+import { CartLeft, returnIdCart } from "./CartLeft";
 import { CartRight } from "./CartRight";
 
 const CartPage = () => {
@@ -29,6 +34,7 @@ const CartPage = () => {
     hoTen: "",
     sdt: "",
   });
+  const [isLoadingButton, setIsLoadingButton] = useState<boolean>(false);
 
   const { data: cart } = useQueryGetAllCartUser(profile?.makh || "");
 
@@ -38,6 +44,72 @@ const CartPage = () => {
 
     setShipping({ ...profile });
   }, [profile]);
+
+  const finalPrice = () => {
+    if (!cart) return 0;
+
+    const listData = cart.filter((item) => {
+      const findChecked = listChecked.find(
+        (checked) => checked === returnIdCart(item),
+      );
+
+      if (findChecked) return true;
+
+      return false;
+    });
+
+    return listData.reduce(
+      (acc, el) => acc + el.soluong * el.sanpham.dongia,
+      0,
+    );
+  };
+
+  const handleSubmitOrder = async () => {
+    if (listChecked.length === 0) {
+      openToastError("Vui lòng chọn sản phẩm để đặt hàng");
+      return;
+    }
+
+    if (!cart) return;
+
+    const listData = cart.filter((item) => {
+      const findChecked = listChecked.find(
+        (checked) => checked === returnIdCart(item),
+      );
+
+      if (findChecked) return true;
+
+      return false;
+    });
+
+    const listOrder: ProductOrderType[] = listData.map((item) => {
+      return {
+        dongia: item.sanpham.dongia,
+        masp: item.sanpham.masp,
+        soluong: item.soluong,
+      };
+    });
+
+    try {
+      setIsLoadingButton(true);
+      await orderService.addOrder({
+        hinhThucThanhToan: 1,
+        ghichu: "abc",
+        dsSanPham: listOrder,
+        makh: profile?.makh || "",
+        diaChi: shipping.diaChi,
+        email: shipping.email,
+        hoTen: shipping.hoTen,
+        sdt: shipping.sdt,
+      });
+
+      queryClient.invalidateQueries([QueryKeysCart.GET_ALL_CART_USER]);
+      setIsLoadingButton(false);
+      openToastSuccess("Order đơn hàng thành công!");
+    } catch (error) {
+      openToastError("Order đơn hàng thất bại, vui lòng thử lại sau!");
+    }
+  };
 
   if (!cart) return <Loading isCenter height="h-[700px]" />;
 
@@ -56,7 +128,13 @@ const CartPage = () => {
           listChecked={listChecked}
           setListChecked={setListChecked}
         />
-        <CartRight shipping={shipping} setShipping={setShipping} />
+        <CartRight
+          shipping={shipping}
+          setShipping={setShipping}
+          finalPrice={finalPrice}
+          handleSubmitOrder={handleSubmitOrder}
+          isLoadingButton={isLoadingButton}
+        />
       </div>
     </PageWrapper>
   );
