@@ -1,12 +1,11 @@
 import { dehydrate } from "@tanstack/react-query";
+import { notFound } from "next/navigation";
 
 import { ProductListPage } from "@/components/ui/Page/ProductListPage";
 import { getAllProductQueryFn } from "@/query/product/queryFnsProduct";
 import { QueryKeysProduct } from "@/query/product/queryKeysProduct";
 import getQueryClient from "@/utils/react-query/getQueryClient";
 import ReactQueryHydrate from "@/utils/react-query/hydrate.client";
-
-import NotFound from "../not-found";
 
 export default async function Products() {
   const queryClient = getQueryClient();
@@ -16,7 +15,7 @@ export default async function Products() {
       getAllProductQueryFn(),
     );
   } catch (error) {
-    NotFound();
+    notFound();
   }
 
   const dehydratedState = dehydrate(queryClient);

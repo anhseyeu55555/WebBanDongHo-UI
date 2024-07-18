@@ -161,7 +161,7 @@ export const Navbar = () => {
               if (!item.children || item.children.length === 0)
                 return (
                   <div
-                    key={index}
+                    key={item.value}
                     className="flex gap-2 h-full cursor-pointer transition-all ease-in duration-200 hover:text-primary"
                   >
                     <Link href={handleAction(item)}>
@@ -174,54 +174,50 @@ export const Navbar = () => {
                   </div>
                 );
               return (
-                <>
+                <motion.div
+                  key={item.value}
+                  className={`group flex h-full cursor-pointer transition-all ease-in duration-200 relative after:content-[''] after:bg-transparent after:w-full after:h-[160%]  after:absolute after:top-0 after:right-0 after:left-0 after:bottom-0 ${
+                    selectedNavbar === item.value ? "text-primary" : ""
+                  }  hover:text-primary`}
+                  onHoverStart={() => {
+                    setSelectedNavbar(item.value);
+                    toggleHover(true);
+                  }}
+                  onHoverEnd={() => {
+                    setSelectedNavbar("");
+                    toggleHover(false);
+                  }}
+                >
+                  <div className={"flex h-full items-center gap-2 relative"}>
+                    <p className="text-lg font-bold uppercase">{item.label}</p>
+
+                    <ChevronDownNavbar />
+                  </div>
+
                   <motion.div
-                    key={index}
-                    className={`group flex h-full cursor-pointer transition-all ease-in duration-200 relative after:content-[''] after:bg-transparent after:w-full after:h-[160%]  after:absolute after:top-0 after:right-0 after:left-0 after:bottom-0 ${
-                      selectedNavbar === item.value ? "text-primary" : ""
-                    }  hover:text-primary`}
-                    onHoverStart={() => {
-                      setSelectedNavbar(item.value);
-                      toggleHover(true);
-                    }}
-                    onHoverEnd={() => {
-                      setSelectedNavbar("");
-                      toggleHover(false);
-                    }}
+                    className="absolute top-10 hidden group-hover:block bg-white shadow-lg rounded-md ring-1 ring-black ring-opacity-5 before:content-[''] before:h-[20px] before:w-[180px] before:bg-transparent before:absolute before:top-[-20px]"
+                    initial="exit"
+                    animate={
+                      isHover && selectedNavbar === item.value
+                        ? "enter"
+                        : "exit"
+                    }
+                    variants={subMenuAnimate}
                   >
-                    <div className={"flex h-full items-center gap-2 relative"}>
-                      <p className="text-lg font-bold uppercase">
-                        {item.label}
-                      </p>
-
-                      <ChevronDownNavbar />
-                    </div>
-
-                    <motion.div
-                      className="absolute top-10 hidden group-hover:block bg-white shadow-lg rounded-md ring-1 ring-black ring-opacity-5 before:content-[''] before:h-[20px] before:w-[180px] before:bg-transparent before:absolute before:top-[-20px]"
-                      initial="exit"
-                      animate={
-                        isHover && selectedNavbar === item.value
-                          ? "enter"
-                          : "exit"
-                      }
-                      variants={subMenuAnimate}
-                    >
-                      {item.children?.map((sub: NavbarType, index: number) => {
-                        return (
-                          <Link
-                            key={index}
-                            className={`text-black  hover:bg-primary hover:text-white
+                    {item.children?.map((sub: NavbarType) => {
+                      return (
+                        <Link
+                          key={sub.value}
+                          className={`text-black  hover:bg-primary hover:text-white
                                group flex items-center rounded-tl-md rounded-tr-md text-sm px-6 py-4 w-[180px]`}
-                            href={handleRedirectSubMenu(item, sub)}
-                          >
-                            <p className="text-lg font-medium">{sub.label}</p>
-                          </Link>
-                        );
-                      })}
-                    </motion.div>
+                          href={handleRedirectSubMenu(item, sub)}
+                        >
+                          <p className="text-lg font-medium">{sub.label}</p>
+                        </Link>
+                      );
+                    })}
                   </motion.div>
-                </>
+                </motion.div>
               );
             })}
           </div>

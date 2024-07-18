@@ -55,7 +55,7 @@ export const useQueryGetAllProduct = () =>
 
 export const useQueryGetProductByCategory = (category: string) =>
   useQuery<ProductType[]>({
-    queryKey: [QueryKeysProduct.GET_PRODUCT_CATEGORY],
+    queryKey: [QueryKeysProduct.GET_PRODUCT_CATEGORY, category],
     queryFn: () => getProductByCategoryQueryFn(category),
     placeholderData: initialProductList,
     staleTime: 1000 * 60 * 5,
@@ -64,7 +64,7 @@ export const useQueryGetProductByCategory = (category: string) =>
 
 export const useQueryGetProductByBrand = (brand: string) =>
   useQuery<ProductType[]>({
-    queryKey: [QueryKeysProduct.GET_PRODUCT_BRAND],
+    queryKey: [QueryKeysProduct.GET_PRODUCT_BRAND, brand],
     queryFn: () => getProductByBrandQueryFn(brand),
     placeholderData: initialProductList,
     staleTime: 1000 * 60 * 5,
@@ -73,7 +73,7 @@ export const useQueryGetProductByBrand = (brand: string) =>
 
 export const useQueryGetProductBySupplier = (supplier: string) =>
   useQuery<ProductType[]>({
-    queryKey: [QueryKeysProduct.GET_PRODUCT_SUPPLIER],
+    queryKey: [QueryKeysProduct.GET_PRODUCT_SUPPLIER, supplier],
     queryFn: () => getProductBySupplierQueryFn(supplier),
     placeholderData: initialProductList,
     staleTime: 1000 * 60 * 5,

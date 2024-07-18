@@ -1,5 +1,4 @@
 import { dehydrate } from "@tanstack/react-query";
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import ProductDetail from "@/components/ui/Page/ProductDetailPage";

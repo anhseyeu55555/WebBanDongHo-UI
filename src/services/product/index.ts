@@ -3,10 +3,10 @@ import axiosClient from "..";
 export const ProductService = {
   getAllProduct: () => axiosClient.get("/sanpham"),
   getProductsByCategory: (category: string) =>
-    axiosClient.get(`/sanpham/danhmuc/{${category}}`),
+    axiosClient.get(`/sanpham/danhmuc/${category}`),
   getProductsByBrand: (brand: string) =>
-    axiosClient.get(`/sanpham/brand/${brand}`),
+    axiosClient.get(`/sanpham/thuonghieu/${brand}`),
   getProductsBySupplier: (supplier: string) =>
-    axiosClient.get(`/sanpham/supplier/${supplier}`),
+    axiosClient.get(`/sanpham/nhacungcap/${supplier}`),
   getDetailProduct: (slug: string) => axiosClient.get(`/sanpham/${slug}`),
 };
