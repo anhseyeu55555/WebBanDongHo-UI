@@ -1,8 +1,13 @@
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import { ButtonCustom } from "@/components/form/ButtonCustom";
 import Divider from "@/components/ui/Divider";
+import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
+import { useMutationAddCart } from "@/mutate/cart/hook";
+import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
 import { ProductType } from "@/types/product";
 
 import { CartIcon } from "../../../../../../public/icons";
@@ -25,11 +30,35 @@ export const ConvertPrice = (price: number): String => {
 export const ProductDetailRight = (props: Props) => {
   const { dataProductDetail } = props;
 
+  const router = useRouter();
+  const { status: loginStatus, data } = useSession();
+
+  const isAuthenticated = handleIsAuthenticated(loginStatus);
+  const { data: profile } = useQueryGetProfile(
+    (data?.user.name as string) || "",
+    isAuthenticated,
+  );
+
   const [quantity, setQuantity] = useState<number>(1);
+
+  const { mutate } = useMutationAddCart();
 
   const handleStock = () => {
     if (!dataProductDetail.soluong) return 0;
     return dataProductDetail.soluong;
+  };
+
+  const handleBuy = () => {
+    handleAddCart();
+    router.push("/cart");
+  };
+
+  const handleAddCart = () => {
+    mutate({
+      makh: profile?.makh || "",
+      masp: dataProductDetail.masp,
+      soluong: quantity,
+    });
   };
 
   const handleShowButtonPayment = () => {
@@ -43,13 +72,7 @@ export const ProductDetailRight = (props: Props) => {
 
     return (
       <>
-        <ButtonCustom
-          variant="contained"
-          size="large"
-          onClick={() => {
-            console.log("Mua ngay");
-          }}
-        >
+        <ButtonCustom variant="contained" size="large" onClick={handleBuy}>
           <p className="text-md">Mua ngay</p>
         </ButtonCustom>
 
@@ -58,9 +81,7 @@ export const ProductDetailRight = (props: Props) => {
             variant="outlined"
             size="large"
             className="flex items-center gap-2 justify-center whitespace-nowrap !md:px-6 !px-4 !md:py-4 !py-2 md:text-md !text-xs "
-            onClick={() => {
-              console.log("bcc");
-            }}
+            onClick={handleAddCart}
           >
             <div>
               <CartIcon />

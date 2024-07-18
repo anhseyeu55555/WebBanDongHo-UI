@@ -41,10 +41,7 @@ export const CartLeft = (props: Props) => {
   const handleRemoveAll = async () => {
     try {
       await cartService.deleteAllCartUser(profile?.makh || "");
-      queryClient.invalidateQueries([
-        QueryKeysCart.GET_ALL_CART_USER,
-        profile?.makh,
-      ]);
+      queryClient.invalidateQueries([QueryKeysCart.GET_ALL_CART_USER]);
       openToastSuccess("Đã xoá hết sản phẩm trong giỏ hàng");
     } catch (error) {
       openToastError("Đã xảy ra lỗi, vui lòng thử lại!");
