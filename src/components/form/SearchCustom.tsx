@@ -63,28 +63,28 @@ export const SearchCustom = (props: Props) => {
         );
 
         break;
-      case SearchValueType.DanhMuc:
-        router.push(
-          `/category/search?${
-            search ? `search=${toLowerCaseNonAccentVietnamese(search)}` : ""
-          }`,
-        );
+        // case SearchValueType.DanhMuc:
+        //   router.push(
+        //     `/category/search?${
+        //       search ? `search=${toLowerCaseNonAccentVietnamese(search)}` : ""
+        //     }`,
+        //   );
 
-        break;
-      case SearchValueType.ThuongHieu:
-        router.push(
-          `/brand/search?${
-            search ? `search=${toLowerCaseNonAccentVietnamese(search)}` : ""
-          }`,
-        );
+        //   break;
+        // case SearchValueType.ThuongHieu:
+        //   router.push(
+        //     `/brand/search?${
+        //       search ? `search=${toLowerCaseNonAccentVietnamese(search)}` : ""
+        //     }`,
+        //   );
 
-        break;
-      case SearchValueType.NhaCungCap:
-        router.push(
-          `/supplier/search${
-            search ? `?query=${toLowerCaseNonAccentVietnamese(search)}` : ""
-          }`,
-        );
+        //   break;
+        // case SearchValueType.NhaCungCap:
+        //   router.push(
+        //     `/supplier/search${
+        //       search ? `?query=${toLowerCaseNonAccentVietnamese(search)}` : ""
+        //     }`,
+        //   );
 
         break;
       default:
@@ -108,7 +108,7 @@ export const SearchCustom = (props: Props) => {
                 <p className="mr-2 lg:mr-4 text-md font-medium">
                   {selectedSearch.label}
                 </p>
-                <ChevronDownBoldIcon className={"h-[24px]"} />
+                {/* <ChevronDownBoldIcon className={"h-[24px]"} /> */}
               </div>
             )}
             selected={selectedSearch}

@@ -10,7 +10,7 @@ import { QueryKeysProduct } from "./queryKeysProduct";
 
 const initialProductList: ProductType[] = [];
 
-const initialProductDetail: ProductType = {
+export const initialProductDetail: ProductType = {
   masp: "",
   tensp: "",
   slug: "",

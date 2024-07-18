@@ -7,6 +7,7 @@ export { default as ChevronLeftIcon } from "./icon_chervon-left.svg";
 export { default as ChevronRightIcon } from "./icon_chervon-right.svg";
 export { default as ChevronDownIcon } from "./icon_chevron-down.svg";
 export { default as ChevronDownBoldIcon } from "./icon_chevron-down-bold.svg";
+export { default as ChevronDownNavbar } from "./icon_chevron-down-navbar.svg";
 export { default as CloseIcon } from "./icon_close.svg";
 export { default as ErrorIcon } from "./icon_error.svg";
 export { default as HiddenPasswordIcon } from "./icon_hidden-password.svg";

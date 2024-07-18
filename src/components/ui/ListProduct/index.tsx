@@ -16,21 +16,15 @@ export const ListProduct = (props: Props) => {
         </h2>
 
         <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
-          <ProductItem
-            styleWrapperProduct="w-full"
-            heightImage={840}
-            widthImage={840}
-          />
-          <ProductItem
-            styleWrapperProduct="w-full"
-            heightImage={840}
-            widthImage={840}
-          />
-          <ProductItem
-            styleWrapperProduct="w-full"
-            heightImage={840}
-            widthImage={840}
-          />
+          {listProducts.slice(0, 20).map((product) => (
+            <ProductItem
+              key={product.masp}
+              product={product}
+              styleWrapperProduct="w-full"
+              heightImage={840}
+              widthImage={840}
+            />
+          ))}
         </div>
       </div>
     </PageWrapper>
