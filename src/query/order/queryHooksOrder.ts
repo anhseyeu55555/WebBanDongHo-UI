@@ -3,20 +3,22 @@ import { useQuery } from "@tanstack/react-query";
 import { OrderDetailType, OrderType } from "@/types/order";
 
 import { initialProductDetail } from "../product/queryHooksProduct";
-import { getListOrderQueryFn } from "./queryFnsOrder";
+import { getDetailOrderQueryFn, getListOrderQueryFn } from "./queryFnsOrder";
 import { QueryKeysOrder } from "./queryKeysOrder";
 
 export const initialListOrder: OrderType[] = [];
 
-export const initialOrderDetail: OrderDetailType = {
-  gia: 0,
-  id: {
-    madh: "",
-    masp: "",
-  },
-  sanpham: initialProductDetail,
-  soluong: 0,
-};
+export const initialOrderDetail: OrderDetailType[] = [];
+
+// {
+//   gia: 0,
+//   id: {
+//     madh: "",
+//     masp: "",
+//   },
+//   sanpham: initialProductDetail,
+//   soluong: 0,
+// };
 
 export const useQueryGetListOrder = (makh: string) =>
   useQuery<OrderType[]>({
@@ -27,9 +29,9 @@ export const useQueryGetListOrder = (makh: string) =>
   });
 
 export const useQueryGetDetailOrder = (madh: string) =>
-  useQuery<OrderDetailType>({
+  useQuery<OrderDetailType[]>({
     queryKey: [QueryKeysOrder.GET_DETAIL_ORDER],
-    queryFn: () => getListOrderQueryFn(madh),
+    queryFn: () => getDetailOrderQueryFn(madh),
     placeholderData: initialOrderDetail,
     enabled: !!madh,
   });

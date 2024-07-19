@@ -17,5 +17,6 @@
   "editor.lineHeight": 0,
   "editor.fontSize": 12,
   "editor.formatOnSave": true,
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "cSpell.words": ["trangthai"]
 }

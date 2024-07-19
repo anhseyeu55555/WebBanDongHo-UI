@@ -54,7 +54,7 @@ export const ButtonCustom = (props: Props) => {
     switch (variant) {
       case "contained":
         classes =
-          "bg-primary text-white hover:bg-blue-50 active:bg-[#1f4fe099] disabled:bg-blue-20";
+          "bg-primary text-white  active:bg-[#1f4fe099] disabled:bg-blue-20";
         break;
       case "outlined":
         classes =

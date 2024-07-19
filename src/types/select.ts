@@ -6,6 +6,7 @@ export interface OptionSelect {
   //   handleOnclick?: () => void;
   icon?: ReactNode;
   link?: string;
+  color?: string;
   //   id?: string;
   //   code?: string;
   //   sellPrice?: number;

@@ -1,3 +1,4 @@
+import { CartType } from "./cart";
 import { ProductType } from "./product";
 import { ProfileType } from "./profile";
 
@@ -34,12 +35,4 @@ export interface OrderType {
   khachhang: ProfileType;
 }
 
-export interface OrderDetailType {
-  id: {
-    madh: string;
-    masp: string;
-  };
-  soluong: number;
-  gia: number;
-  sanpham: ProductType;
-}
+export interface OrderDetailType extends CartType {}
