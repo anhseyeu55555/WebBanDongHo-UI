@@ -117,7 +117,7 @@ export const ModalOrderDetail = (props: Props) => {
         </div>
 
         <ButtonCustom
-          title="xác nhận"
+          title="Xác nhận"
           variant="contained"
           size="large"
           style="ease-in duration-200 hover:scale-105"
