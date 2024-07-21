@@ -56,11 +56,7 @@ export const SearchCustom = (props: Props) => {
   const handleRedirect = (search: string) => {
     switch (selectedSearch.value) {
       case SearchValueType.SanPham:
-        router.push(
-          `/products/search${
-            search ? `?search=${toLowerCaseNonAccentVietnamese(search)}` : ""
-          }`,
-        );
+        router.push(`/products/search${search ? `?query=${search}` : ""}`);
 
         break;
         // case SearchValueType.DanhMuc:

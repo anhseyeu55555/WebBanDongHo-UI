@@ -9,4 +9,8 @@ export const ProductService = {
   getProductsBySupplier: (supplier: string) =>
     axiosClient.get(`/sanpham/nhacungcap/${supplier}`),
   getDetailProduct: (slug: string) => axiosClient.get(`/sanpham/${slug}`),
+  getProductsBySearch: (params: any) =>
+    axiosClient.get(`/sanpham/search`, {
+      params,
+    }),
 };
