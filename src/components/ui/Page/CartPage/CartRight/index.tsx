@@ -7,6 +7,7 @@ import { ShippingType } from "@/types/profile";
 
 import { AddressShipping } from "./AddressShipping";
 import { Calculator } from "./Calculator";
+import { Paypal } from "./Paypal";
 
 interface Props {
   shipping: ShippingType;
@@ -29,6 +30,8 @@ export const CartRight = (props: Props) => {
       <AddressShipping shipping={shipping} setShipping={setShipping} />
 
       <Calculator finalPrice={finalPrice} />
+
+      <Paypal />
 
       <ButtonCustom
         style={"py-3 flex justify-center items-center"}
