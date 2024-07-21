@@ -13,6 +13,8 @@ export { default as CloseIcon } from "./icon_close.svg";
 export { default as ErrorIcon } from "./icon_error.svg";
 export { default as HiddenPasswordIcon } from "./icon_hidden-password.svg";
 export { default as MenuIcon } from "./icon_menu.svg";
+export { default as MicIcon } from "./icon_mic.svg";
+export { default as MicWhiteIcon } from "./icon_mic-white.svg";
 export { default as CheckedRadioIcon } from "./icon_radio-checked.svg";
 export { default as SearchIcon } from "./icon_search.svg";
 export { default as ShowPasswordIcon } from "./icon_show-password.svg";

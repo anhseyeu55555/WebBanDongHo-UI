@@ -19,6 +19,22 @@ export default module.exports = {
       "2xl": "1512px",
     },
     extend: {
+      keyframes: {
+        scaleMicro: {
+          "0%": {
+            transform: "scale(0.7)",
+          },
+          "50%": {
+            transform: "scale(1)",
+          },
+          "100%": {
+            transform: "scale(0.7)",
+          },
+        },
+      },
+      animation: {
+        "scale-micro": "scaleMicro 1.5s linear infinite",
+      },
       colors: {
         primary: "#6e9c92",
         success: "#00AB56",

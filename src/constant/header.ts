@@ -14,16 +14,16 @@ export const listDropDownSearch: OptionSelect[] = [
     label: "Sản phẩm",
     value: SearchValueType.SanPham,
   },
-  {
-    label: "Danh mục",
-    value: SearchValueType.DanhMuc,
-  },
-  {
-    label: "Thương hiệu",
-    value: SearchValueType.ThuongHieu,
-  },
-  {
-    label: "Nhà cung cấp",
-    value: SearchValueType.NhaCungCap,
-  },
+  // {
+  //   label: "Danh mục",
+  //   value: SearchValueType.DanhMuc,
+  // },
+  // {
+  //   label: "Thương hiệu",
+  //   value: SearchValueType.ThuongHieu,
+  // },
+  // {
+  //   label: "Nhà cung cấp",
+  //   value: SearchValueType.NhaCungCap,
+  // },
 ];

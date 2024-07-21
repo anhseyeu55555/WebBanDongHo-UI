@@ -10,8 +10,16 @@ import { listDropDownSearch, SearchValueType } from "@/constant/header";
 import { toLowerCaseNonAccentVietnamese } from "@/helpers/handleRemoveAccents";
 import { OptionSelect } from "@/types/select";
 
-import { ChevronDownBoldIcon, SearchIcon } from "../../../public/icons";
+import {
+  ChevronDownBoldIcon,
+  MicIcon,
+  SearchIcon,
+} from "../../../public/icons";
+import useSpeechToText from "../../hooks/useSpeechToText";
 import CartIcon from "../ui/Header/CartIcon";
+import { ImageCustom } from "../ui/ImageCustom";
+import { ModalMic } from "../ui/Modal/ModalChildren/ModalMic";
+import { ButtonCustom } from "./ButtonCustom";
 import { DropdownCustom } from "./DropDownCustom";
 
 interface Props {
@@ -45,13 +53,28 @@ export const SearchCustom = (props: Props) => {
 
   const router = useRouter();
 
-  const { control, handleSubmit } = useForm<SearchForm>({
+  const {
+    control,
+    handleSubmit,
+    setValue: setValueForm,
+  } = useForm<SearchForm>({
     defaultValues: {
       search: "",
     },
   });
 
   const [value, setValue] = useState<string>("");
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const { isListening, transcript, startListening, stopListening } =
+    useSpeechToText({
+      continuous: true,
+    });
+
+  const stopVoiceInput = () => {
+    setValueForm("search", transcript);
+    setValue(transcript);
+    stopListening();
+  };
 
   const handleRedirect = (search: string) => {
     switch (selectedSearch.value) {
@@ -95,82 +118,110 @@ export const SearchCustom = (props: Props) => {
   };
 
   return (
-    <div className={`lg:w-[50%] w-full h-[${height}] flex items-center gap-4`}>
-      <div className="rounded bg-white border-[1px] border-solid border-[#F5F5FA] h-full w-full py-3 px-4">
-        <div className="flex items-center">
-          <DropdownCustom
-            LabelComponent={() => (
-              <div className="flex h-full items-center">
-                <p className="mr-2 lg:mr-4 text-md font-medium">
-                  {selectedSearch.label}
-                </p>
-                {/* <ChevronDownBoldIcon className={"h-[24px]"} /> */}
+    <>
+      <div
+        className={`lg:w-[50%] w-full h-[${height}] flex items-center gap-4`}
+      >
+        <div className="rounded bg-white border-[1px] border-solid border-[#F5F5FA] h-full w-full py-3 px-4">
+          <div className="flex items-center">
+            <DropdownCustom
+              LabelComponent={() => (
+                <div className="flex h-full items-center">
+                  <p className="mr-2 lg:mr-4 text-md font-medium">
+                    {selectedSearch.label}
+                  </p>
+                  {/* <ChevronDownBoldIcon className={"h-[24px]"} /> */}
+                </div>
+              )}
+              selected={selectedSearch}
+              listOptions={listDropDownSearch}
+              onClickItemMenu={(option: OptionSelect) => {
+                setSelectedSearch(option);
+              }}
+              styleMenu="pr-4 border-[#A6A6B0] border-r-[1px]"
+              styleMenuItems={`${handleWidthDropdown(
+                selectedSearch.value as string,
+              )}`}
+              styleMenuItem="w-full"
+              styleOptionLabel="text-sm font-normal"
+            />
+
+            <form
+              onSubmitCapture={handleSubmit(onSubmit)}
+              className="flex flex-1"
+            >
+              <div className="flex-1 px-4">
+                <Combobox value={value}>
+                  <Controller
+                    name="search"
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <Combobox.Input
+                        type={"text"}
+                        placeholder={"Tìm kiếm sản phẩm..."}
+                        value={value}
+                        onChange={(event) => {
+                          const value = event.target.value;
+                          onChange(value);
+
+                          setValue(value);
+                        }}
+                        className={
+                          "w-full placeholder:font-light placeholder:text-md focus-visible:outline-none truncate"
+                        }
+                      />
+                    )}
+                  />
+                </Combobox>
               </div>
-            )}
-            selected={selectedSearch}
-            listOptions={listDropDownSearch}
-            onClickItemMenu={(option: OptionSelect) => {
-              setSelectedSearch(option);
-            }}
-            styleMenu="pr-4 border-[#A6A6B0] border-r-[1px]"
-            styleMenuItems={`${handleWidthDropdown(
-              selectedSearch.value as string,
-            )}`}
-            styleMenuItem="w-full"
-            styleOptionLabel="text-sm font-normal"
-          />
-
-          <form
-            onSubmitCapture={handleSubmit(onSubmit)}
-            className="flex flex-1"
-          >
-            <div className="flex-1 px-4">
-              <Combobox value={value}>
-                <Controller
-                  name="search"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Combobox.Input
-                      type={"text"}
-                      placeholder={"Tìm kiếm sản phẩm..."}
-                      value={value}
-                      onChange={(event) => {
-                        const value = event.target.value;
-                        onChange(value);
-
-                        setValue(value);
-                      }}
-                      className={
-                        "w-full placeholder:font-light placeholder:text-md focus-visible:outline-none truncate"
-                      }
-                    />
-                  )}
-                />
-              </Combobox>
-            </div>
-            <button className="h-full" type="submit">
-              <SearchIcon className="h-6 w-6" />
-            </button>
-          </form>
+              <button
+                className="h-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsOpenModal(true);
+                  startListening();
+                }}
+              >
+                <MicIcon className="h-6 w-6" />
+              </button>
+              <button className="h-full" type="submit">
+                <SearchIcon className="h-6 w-6" />
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-      <Link href={"#"} className="lg:hidden block relative">
-        <div className="flex items-center cursor-pointer">
-          <CartIcon iconClassName="[&>path]:stroke-black [&>circle]:stroke-black" />
-        </div>
+        <Link href={"#"} className="lg:hidden block relative">
+          <div className="flex items-center cursor-pointer">
+            <CartIcon iconClassName="[&>path]:stroke-black [&>circle]:stroke-black" />
+          </div>
 
-        {/* {totalItems && totalItems > 0 ? (
+          {/* {totalItems && totalItems > 0 ? (
           <div className="px-1 py-0 rounded-full bg-red-60 text-white font-bold text-xs absolute right-0 top-0 flex items-center justify-center">
             {totalItems}
           </div>
         ) : (
           <></>
         )} */}
-      </Link>
+        </Link>
 
-      {/* <div className="lg:hidden block relative" onClick={() => console.log("")}>
+        {/* <div className="lg:hidden block relative" onClick={() => console.log("")}>
         <BellIcon className="cursor-pointer [&>path]:stroke-black lg:hidden block" />
       </div> */}
-    </div>
+      </div>
+
+      {isListening && (
+        <ModalMic
+          handleCloseModal={() => {
+            setIsOpenModal(false);
+            stopVoiceInput();
+            onSubmit({
+              search: transcript,
+            });
+          }}
+          isOpenModal={isOpenModal}
+          transcript={transcript}
+        />
+      )}
+    </>
   );
 };
