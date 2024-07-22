@@ -5,7 +5,6 @@ import "swiper/css/pagination";
 
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import Script from "next/script";
 
 import Footer from "@/components/ui/Footer";
 import Header from "@/components/ui/Header";
@@ -43,8 +42,6 @@ export default function RootLayout({
               </NextAuthProvider>
             </AppContextProvider>
           </ReactQueryProviders>
-
-          <Script src="https://www.paypal.com/sdk/js?client-id=AQ2_oo2UhcmrCSUTCCkEiE9AFEEb17ul-0sGiJD8G-9byz2_LepQ__WkNEmWikUSnmsYD7cadvKd-5a8" />
         </div>
       </body>
     </html>

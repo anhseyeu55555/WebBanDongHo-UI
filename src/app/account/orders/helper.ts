@@ -39,7 +39,7 @@ export const dataTrangthai = (trangthai: number) => {
 
 export const textHinhThucThanhThoan = (hinhthuc: number) => {
   if (hinhthuc === 1) {
-    return "Tiền mặt";
+    return "Thanh toán khi nhận hàng";
   }
 
   return "Paypal";

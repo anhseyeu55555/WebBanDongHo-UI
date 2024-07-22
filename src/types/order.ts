@@ -36,3 +36,11 @@ export interface OrderType {
 }
 
 export interface OrderDetailType extends CartType {}
+
+export interface UpdateDonHangFormType {
+  madh: string;
+  manv?: string;
+  manvgh?: string;
+  trangthai: number;
+  hinhThucThanhToan: number;
+}

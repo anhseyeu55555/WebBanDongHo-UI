@@ -1,41 +1,42 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 
-export const Paypal = () => {
-  const paypal = useRef(null);
-
-  useEffect(() => {
-    (window as any).paypal
-      .Buttons({
-        createOrder: (data: any, actions: any, err: any) => {
-          return actions.order.create({
-            intent: "CAPTURE",
-            purchase_units: [
-              {
-                description: "Cool looking table",
-                amount: {
-                  currency_code: "USD",
-                  value: 23,
-                },
-              },
-            ],
-          });
-        },
-        onApprove: async (data: any, actions: any) => {
-          const order = await actions.order.capture();
-          console.log(order);
-        },
-        onError: (err: any) => {
-          console.log(err);
-        },
-      })
-      .render(paypal.current);
-  }, []);
+interface Props {
+  finalPrice: () => number;
+  handleApproveOrderPaypal: () => void;
+}
+export const Paypal = (props: Props) => {
+  const { finalPrice, handleApproveOrderPaypal } = props;
 
   return (
     <div>
-      <div ref={paypal}></div>
+      <PayPalButtons
+        key={finalPrice()}
+        style={{ layout: "horizontal" }}
+        createOrder={(data: any, actions: any) => {
+          console.log(data);
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: finalPrice(),
+                  currency_code: "USD",
+                },
+                description: "Hình thức thanh toán",
+              },
+            ],
+          });
+        }}
+        onApprove={async (data: any, actions: any) => {
+          const order = await actions.order.capture();
+          console.log(order);
+          handleApproveOrderPaypal();
+        }}
+        onError={(err: any) => {
+          console.log(err);
+        }}
+      />
     </div>
   );
 };

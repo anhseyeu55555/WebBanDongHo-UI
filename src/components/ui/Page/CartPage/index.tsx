@@ -1,5 +1,6 @@
 "use client";
 
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -47,17 +48,13 @@ const CartPage = () => {
 
   const finalPrice = () => {
     if (!cart) return 0;
-
     const listData = cart.filter((item) => {
       const findChecked = listChecked.find(
         (checked) => checked === returnIdCart(item),
       );
-
       if (findChecked) return true;
-
       return false;
     });
-
     return listData.reduce(
       (acc, el) => acc + el.soluong * el.sanpham.dongia,
       0,
@@ -111,6 +108,53 @@ const CartPage = () => {
     }
   };
 
+  const handleApproveOrderPaypal = async () => {
+    if (listChecked.length === 0) {
+      openToastError("Vui lòng chọn sản phẩm để đặt hàng");
+      return;
+    }
+
+    if (!cart) return;
+
+    const listData = cart.filter((item) => {
+      const findChecked = listChecked.find(
+        (checked) => checked === returnIdCart(item),
+      );
+
+      if (findChecked) return true;
+
+      return false;
+    });
+
+    const listOrder: ProductOrderType[] = listData.map((item) => {
+      return {
+        dongia: item.sanpham.dongia,
+        masp: item.sanpham.masp,
+        soluong: item.soluong,
+      };
+    });
+
+    try {
+      setIsLoadingButton(true);
+      await orderService.addOrder({
+        hinhThucThanhToan: 2,
+        ghichu: "abc",
+        dsSanPham: listOrder,
+        makh: profile?.makh || "",
+        diaChi: shipping.diaChi,
+        email: shipping.email,
+        hoTen: shipping.hoTen,
+        sdt: shipping.sdt,
+      });
+
+      queryClient.invalidateQueries([QueryKeysCart.GET_ALL_CART_USER]);
+      setIsLoadingButton(false);
+      openToastSuccess("Order đơn hàng thành công!");
+    } catch (error) {
+      openToastError("Order đơn hàng thất bại, vui lòng thử lại sau!");
+    }
+  };
+
   if (!cart) return <Loading isCenter height="h-[700px]" />;
 
   if (cart.length === 0)
@@ -121,22 +165,27 @@ const CartPage = () => {
     );
 
   return (
-    <PageWrapper style="pt-10 pb-20">
-      <div className="flex lg:flex-row flex-col gap-10">
-        <CartLeft
-          cart={cart}
-          listChecked={listChecked}
-          setListChecked={setListChecked}
-        />
-        <CartRight
-          shipping={shipping}
-          setShipping={setShipping}
-          finalPrice={finalPrice}
-          handleSubmitOrder={handleSubmitOrder}
-          isLoadingButton={isLoadingButton}
-        />
-      </div>
-    </PageWrapper>
+    <PayPalScriptProvider
+      options={{ clientId: process.env.NEXT_PUBLIC_APP_PAYPAL || "" }}
+    >
+      <PageWrapper style="pt-10 pb-20">
+        <div className="flex lg:flex-row flex-col gap-10">
+          <CartLeft
+            cart={cart}
+            listChecked={listChecked}
+            setListChecked={setListChecked}
+          />
+          <CartRight
+            shipping={shipping}
+            setShipping={setShipping}
+            finalPrice={finalPrice}
+            handleSubmitOrder={handleSubmitOrder}
+            isLoadingButton={isLoadingButton}
+            handleApproveOrderPaypal={handleApproveOrderPaypal}
+          />
+        </div>
+      </PageWrapper>
+    </PayPalScriptProvider>
   );
 };
 

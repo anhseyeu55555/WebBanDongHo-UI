@@ -6,8 +6,12 @@ import Divider from "@/components/ui/Divider";
 import { ImageCustom } from "@/components/ui/ImageCustom";
 import { Loading } from "@/components/ui/Loading";
 import { ConvertPrice } from "@/helpers/convert";
+import { openToastError, openToastSuccess } from "@/helpers/toast";
 import { useQueryGetDetailOrder } from "@/query/order/queryHooksOrder";
+import { QueryKeysOrder } from "@/query/order/queryKeysOrder";
+import { orderService } from "@/services/order";
 import { OrderDetailType, OrderType } from "@/types/order";
+import { queryClient } from "@/utils/react-query/react-query-provider";
 
 import { ModalWrapper } from "../../ModalWrapper";
 
@@ -33,6 +37,24 @@ export const ModalOrderDetail = (props: Props) => {
       (acc, el) => acc + el.soluong * el.sanpham.dongia,
       0,
     );
+  };
+
+  const handleCancelOrder = async () => {
+    try {
+      await orderService.updateDonHang({
+        hinhThucThanhToan: selectOrder.hinhThucThanhToan,
+        madh: selectOrder.madh,
+        manv: undefined,
+        manvgh: undefined,
+        trangthai: 4,
+      });
+
+      queryClient.invalidateQueries([QueryKeysOrder.GET_LIST_ORDER_USER]);
+      openToastSuccess("Huỷ đơn hàng thành công!");
+      handleCloseModal();
+    } catch (error) {
+      openToastError("Đã xảy ra lỗi, vui lòng thử lại!");
+    }
   };
 
   const renderContent = () => {
@@ -116,12 +138,26 @@ export const ModalOrderDetail = (props: Props) => {
           Tổng tiền thanh toán: {ConvertPrice(finalPrice())}
         </div>
 
-        <ButtonCustom
-          title="Xác nhận"
-          variant="contained"
-          size="large"
-          style="ease-in duration-200 hover:scale-105"
-        />
+        <div className="flex gap-4 justify-between">
+          <ButtonCustom
+            title="Xác nhận"
+            variant="contained"
+            size="large"
+            style="ease-in duration-200 hover:scale-105"
+            onClick={() => {
+              handleCloseModal();
+            }}
+          />
+          {(selectOrder.trangThai === 0 || selectOrder.trangThai === 1) && (
+            <ButtonCustom
+              title="Huỷ đơn hàng"
+              variant="contained"
+              size="large"
+              style="ease-in duration-200 hover:scale-105"
+              onClick={handleCancelOrder}
+            />
+          )}
+        </div>
       </div>
     );
   };

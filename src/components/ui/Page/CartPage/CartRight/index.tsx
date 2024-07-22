@@ -15,6 +15,7 @@ interface Props {
   finalPrice: () => number;
   isLoadingButton: boolean;
   handleSubmitOrder: () => void;
+  handleApproveOrderPaypal: () => void;
 }
 
 export const CartRight = (props: Props) => {
@@ -24,6 +25,7 @@ export const CartRight = (props: Props) => {
     finalPrice,
     isLoadingButton,
     handleSubmitOrder,
+    handleApproveOrderPaypal,
   } = props;
   return (
     <div className=" h-full lg:w-[360px] w-full flex flex-col gap-4">
@@ -31,8 +33,12 @@ export const CartRight = (props: Props) => {
 
       <Calculator finalPrice={finalPrice} />
 
-      <Paypal />
-
+      {finalPrice() > 0 && (
+        <Paypal
+          finalPrice={finalPrice}
+          handleApproveOrderPaypal={handleApproveOrderPaypal}
+        />
+      )}
       <ButtonCustom
         style={"py-3 flex justify-center items-center"}
         borderRadius="rounded"
