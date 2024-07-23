@@ -108,7 +108,7 @@ export const ItemProductCheckout = (props: Props) => {
             <div className="block lg:hidden">
               <div className="flex justify-between items-center">
                 <p className={`${styleTextItem}`}>
-                  {ConvertPrice(item.sanpham.dongia || 0)}
+                  {ConvertPrice(item.gia || 0)}
                 </p>
 
                 <div className="lg:hidden block">
@@ -125,7 +125,7 @@ export const ItemProductCheckout = (props: Props) => {
       </div>
 
       <div className={`w-[10%] lg:block hidden gap-2 ${styleTextItem}`}>
-        {ConvertPrice(item.sanpham.dongia)}
+        {ConvertPrice(item.gia)}
       </div>
 
       <div className="w-[10%] lg:block hidden">
@@ -139,7 +139,7 @@ export const ItemProductCheckout = (props: Props) => {
       <div
         className={`${styleTextItem} text-primary w-[12%] lg:px-0 px-[26px]  whitespace-nowrap`}
       >
-        {ConvertPrice(item.sanpham.dongia * item.soluong)}
+        {ConvertPrice(item.gia * item.soluong)}
       </div>
 
       <div className="lg:block hidden" onClick={handleRemoveItem}>

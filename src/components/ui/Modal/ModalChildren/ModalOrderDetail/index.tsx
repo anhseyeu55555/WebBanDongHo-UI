@@ -33,10 +33,7 @@ export const ModalOrderDetail = (props: Props) => {
   const finalPrice = () => {
     if (!orderDetail) return 0;
 
-    return orderDetail.reduce(
-      (acc, el) => acc + el.soluong * el.sanpham.dongia,
-      0,
-    );
+    return orderDetail.reduce((acc, el) => acc + el.soluong * el.gia, 0);
   };
 
   const handleCancelOrder = async () => {
@@ -120,7 +117,7 @@ export const ModalOrderDetail = (props: Props) => {
                         </p>
                       </Link>
 
-                      <p>{ConvertPrice(item.sanpham.dongia)}</p>
+                      <p>{ConvertPrice(item.gia)}</p>
                     </div>
                   </div>
                 </div>

@@ -14,6 +14,7 @@ export interface CartId {
 
 export interface CartType {
   soluong: number;
+  gia: number;
   khachhang: ProfileType;
   sanpham: ProductType;
   id: CartId;
