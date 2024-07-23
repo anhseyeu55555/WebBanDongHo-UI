@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { ButtonCustom } from "@/components/form/ButtonCustom";
 import Divider from "@/components/ui/Divider";
+import { AppContext } from "@/contexts/app.contexts";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
+import { handleOpenModal } from "@/helpers/handleModal";
 import { openToastSuccess } from "@/helpers/toast";
 import { useMutationAddCart } from "@/mutate/cart/hook";
 import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
@@ -31,6 +33,7 @@ export const ConvertPrice = (price: number): String => {
 export const ProductDetailRight = (props: Props) => {
   const { dataProductDetail } = props;
 
+  const { state, dispatch } = useContext(AppContext);
   const router = useRouter();
   const { status: loginStatus, data } = useSession();
 
@@ -50,11 +53,19 @@ export const ProductDetailRight = (props: Props) => {
   };
 
   const handleBuy = () => {
+    if (!isAuthenticated) {
+      handleOpenModal(state, dispatch, "Signin");
+      return;
+    }
     handleAddCart();
     router.push("/cart");
   };
 
   const handleAddCart = () => {
+    if (!isAuthenticated) {
+      handleOpenModal(state, dispatch, "Signin");
+      return;
+    }
     mutate({
       makh: profile?.makh || "",
       masp: dataProductDetail.masp,

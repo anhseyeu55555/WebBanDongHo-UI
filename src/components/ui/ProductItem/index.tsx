@@ -4,9 +4,12 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useContext } from "react";
 
+import { AppContext } from "@/contexts/app.contexts";
 import { ConvertPrice } from "@/helpers/convert";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
+import { handleOpenModal } from "@/helpers/handleModal";
 import { openToastSuccess } from "@/helpers/toast";
 import { useMutationAddCart } from "@/mutate/cart/hook";
 import { useQueryGetProfile } from "@/query/profile/queryFnsProfile";
@@ -31,6 +34,7 @@ export const ProductItem = (props: Props) => {
     styleWrapperProduct,
   } = props;
 
+  const { state, dispatch } = useContext(AppContext);
   const router = useRouter();
   const { status: loginStatus, data } = useSession();
 
@@ -43,11 +47,19 @@ export const ProductItem = (props: Props) => {
   const { mutate } = useMutationAddCart();
 
   const handleBuy = () => {
+    if (!isAuthenticated) {
+      handleOpenModal(state, dispatch, "Signin");
+      return;
+    }
     handleAddCart();
     router.push("/cart");
   };
 
   const handleAddCart = () => {
+    if (!isAuthenticated) {
+      handleOpenModal(state, dispatch, "Signin");
+      return;
+    }
     mutate({
       makh: profile?.makh || "",
       masp: product.masp,
