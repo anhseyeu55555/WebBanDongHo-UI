@@ -145,7 +145,7 @@ export const ModalOrderDetail = (props: Props) => {
               handleCloseModal();
             }}
           />
-          {(selectOrder.trangThai === 0 || selectOrder.trangThai === 1) && (
+          {selectOrder.trangThai === 0 && (
             <ButtonCustom
               title="Huỷ đơn hàng"
               variant="contained"

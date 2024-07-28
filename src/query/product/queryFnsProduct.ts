@@ -6,6 +6,12 @@ export const getAllProductQueryFn = async () => {
   return data;
 };
 
+export const getBestSellerProductQueryFn = async () => {
+  const { data } = await ProductService.getBestSeller();
+
+  return data;
+};
+
 export const getProductBySearchQueryFn = async (params: any) => {
   const { data } = await ProductService.getProductsBySearch(params);
 

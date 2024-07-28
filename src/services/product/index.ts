@@ -2,6 +2,7 @@ import axiosClient from "..";
 
 export const ProductService = {
   getAllProduct: () => axiosClient.get("/sanpham"),
+  getBestSeller: () => axiosClient.get("/sanpham/best-seller"),
   getProductsByCategory: (category: string) =>
     axiosClient.get(`/sanpham/danhmuc/${category}`),
   getProductsByBrand: (brand: string) =>

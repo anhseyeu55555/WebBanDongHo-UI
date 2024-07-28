@@ -1,6 +1,9 @@
 "use client";
 
-import { useQueryGetAllProduct } from "@/query/product/queryHooksProduct";
+import {
+  useQueryGetAllProduct,
+  useQueryGetBestSellerProduct,
+} from "@/query/product/queryHooksProduct";
 import { ProductType } from "@/types/product";
 
 import { BannerHome } from "./Banner";
@@ -8,6 +11,7 @@ import { SectionProduct } from "./SectionProduct";
 
 const HomePage = () => {
   const { data: listProduct } = useQueryGetAllProduct();
+  const { data: listBestSellerProduct } = useQueryGetBestSellerProduct();
 
   return (
     <>
@@ -24,7 +28,7 @@ const HomePage = () => {
 
       <div className="w-full h-full pt-4 lg:pt-20  bg-gray-10">
         <SectionProduct
-          products={listProduct as ProductType[]}
+          products={listBestSellerProduct as ProductType[]}
           title="Sản phẩm bán chạy nhất"
         />
       </div>

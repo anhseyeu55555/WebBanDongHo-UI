@@ -3,7 +3,10 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import HomePage from "@/components/ui/Page/HomePage";
-import { getAllProductQueryFn } from "@/query/product/queryFnsProduct";
+import {
+  getAllProductQueryFn,
+  getBestSellerProductQueryFn,
+} from "@/query/product/queryFnsProduct";
 import { QueryKeysProduct } from "@/query/product/queryKeysProduct";
 import getQueryClient from "@/utils/react-query/getQueryClient";
 import ReactQueryHydrate from "@/utils/react-query/hydrate.client";
@@ -19,6 +22,9 @@ export default async function Home() {
   try {
     await queryClient.fetchQuery([QueryKeysProduct.GET_ALL_PRODUCT], () =>
       getAllProductQueryFn(),
+    );
+    await queryClient.fetchQuery([QueryKeysProduct.GET_BEST_SELLER], () =>
+      getBestSellerProductQueryFn(),
     );
   } catch (error) {
     notFound();

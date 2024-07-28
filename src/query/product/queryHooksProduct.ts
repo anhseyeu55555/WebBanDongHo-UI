@@ -4,6 +4,7 @@ import { ProductType } from "@/types/product";
 
 import {
   getAllProductQueryFn,
+  getBestSellerProductQueryFn,
   getDetailProductQueryFn,
   getProductByBrandQueryFn,
   getProductByCategoryQueryFn,
@@ -49,6 +50,15 @@ export const useQueryGetAllProduct = () =>
   useQuery<ProductType[]>({
     queryKey: [QueryKeysProduct.GET_ALL_PRODUCT],
     queryFn: () => getAllProductQueryFn(),
+    placeholderData: initialProductList,
+    staleTime: 1000 * 60 * 5,
+    keepPreviousData: true,
+  });
+
+export const useQueryGetBestSellerProduct = () =>
+  useQuery<ProductType[]>({
+    queryKey: [QueryKeysProduct.GET_BEST_SELLER],
+    queryFn: () => getBestSellerProductQueryFn(),
     placeholderData: initialProductList,
     staleTime: 1000 * 60 * 5,
     keepPreviousData: true,
