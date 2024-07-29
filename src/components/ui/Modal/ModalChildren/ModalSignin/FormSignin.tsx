@@ -8,11 +8,11 @@ import { ButtonCustom } from "@/components/form/ButtonCustom";
 import { InputCustom } from "@/components/form/InputCustom";
 import { InputPasswordCustom } from "@/components/form/InputCustomPassword";
 import { AppContext } from "@/contexts/app.contexts";
-import { handleCloseModal } from "@/helpers/handleModal";
+import { handleCloseModal, handleOpenModal } from "@/helpers/handleModal";
 import { LoginFormType } from "@/services/auth/type";
 
 const schema = yup.object().shape({
-  username: yup.string().required("Vui lòng nhập email hoặc số điện thoại"),
+  username: yup.string().required("Vui lòng nhập username"),
   password: yup.string().required("Vui lòng nhập mật khẩu"),
 });
 
@@ -54,8 +54,8 @@ export const FormSignin = () => {
           name="username"
           control={control}
           errors={errors.username?.message}
-          label="Email / Số điện thoại"
-          placeholder="Nhập email/số điện thoại"
+          label="Username"
+          placeholder="Nhập username"
         />
       </div>
 
@@ -69,12 +69,12 @@ export const FormSignin = () => {
         />
       </div>
 
-      {/* <div
+      <div
         className="mb-6 text-right text-primary text-base font-medium cursor-pointer"
-        onClick={() => handleOpenModal(state, dispatch, "ResetPassword")}
+        onClick={() => handleOpenModal(state, dispatch, "ForgetPassword")}
       >
         Quên mật khẩu?
-      </div> */}
+      </div>
 
       <ButtonCustom
         type="submit"

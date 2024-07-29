@@ -12,7 +12,7 @@ export interface ContextAction<T, P> {
 
 export type ContextActionType = "OPENMODAL";
 
-export type OpenModalType = "Signin" | "Signup" | "";
+export type OpenModalType = "Signin" | "Signup" | "ForgetPassword" | "";
 
 export interface AppState {
   isAuthenticated: boolean;
