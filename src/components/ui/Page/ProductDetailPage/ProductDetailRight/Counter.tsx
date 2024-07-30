@@ -17,7 +17,7 @@ const Counter = (props: Props) => {
   };
 
   const handleIncrease = () => {
-    if (stock <= quantity) return;
+    if (quantity >= stock) return;
     setQuantity(quantity + 1);
   };
   return (

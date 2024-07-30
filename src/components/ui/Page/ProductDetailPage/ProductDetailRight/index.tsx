@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -6,6 +8,7 @@ import { useContext, useState } from "react";
 import { ButtonCustom } from "@/components/form/ButtonCustom";
 import Divider from "@/components/ui/Divider";
 import { AppContext } from "@/contexts/app.contexts";
+import { ConvertPrice } from "@/helpers/convert";
 import { handleIsAuthenticated } from "@/helpers/handleIsAuthenticated";
 import { handleOpenModal } from "@/helpers/handleModal";
 import { openToastSuccess } from "@/helpers/toast";
@@ -19,16 +22,6 @@ import Counter from "./Counter";
 interface Props {
   dataProductDetail: ProductType;
 }
-
-export const ConvertPrice = (price: number): String => {
-  if (!price || price == 0) {
-    return "Miễn phí";
-  }
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(price);
-};
 
 export const ProductDetailRight = (props: Props) => {
   const { dataProductDetail } = props;
