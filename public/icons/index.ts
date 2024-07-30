@@ -17,6 +17,7 @@ export { default as MicIcon } from "./icon_mic.svg";
 export { default as MicWhiteIcon } from "./icon_mic-white.svg";
 export { default as CheckedRadioIcon } from "./icon_radio-checked.svg";
 export { default as SearchIcon } from "./icon_search.svg";
+export { default as SendIcon } from "./icon_send.svg";
 export { default as ShowPasswordIcon } from "./icon_show-password.svg";
 export { default as TrashIcon } from "./icon_trash.svg";
 export { default as UserIcon } from "./icon_user.svg";

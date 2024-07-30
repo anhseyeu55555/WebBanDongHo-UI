@@ -7,6 +7,7 @@ import { SliderCarousel } from "@/components/ui/SliderCarousel";
 import { ProductType } from "@/types/product";
 
 import { ProductDetailRight } from "../ProductDetailRight";
+import { Comment } from "./Comment";
 
 interface Props {
   dataProductDetail: ProductType;
@@ -125,6 +126,10 @@ export const ProductDetailLeft = (props: Props) => {
           className="absolute left-0 bottom-0 bg-gray-10 md:hidden block -translate-x-1/2 h-4"
           style={{ width: 2000 }}
         />
+      </div>
+
+      <div className="mt-4">
+        <Comment dataProductDetail={dataProductDetail} />
       </div>
     </div>
   );
