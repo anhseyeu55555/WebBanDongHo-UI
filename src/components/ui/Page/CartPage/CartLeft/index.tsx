@@ -49,6 +49,8 @@ export const CartLeft = (props: Props) => {
   };
 
   const handleCheckedItem = (item: CartType) => {
+    if (item.sanpham.soluong <= 0) return;
+
     const findItemChecked = listChecked.find(
       (checked) => checked === returnIdCart(item),
     );
