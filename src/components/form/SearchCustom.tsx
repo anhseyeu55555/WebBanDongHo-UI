@@ -15,7 +15,6 @@ import {
   MicIcon,
   SearchIcon,
 } from "../../../public/icons";
-import useSpeechToText from "../../hooks/useSpeechToText";
 import CartIcon from "../ui/Header/CartIcon";
 import { ImageCustom } from "../ui/ImageCustom";
 import { ModalMic } from "../ui/Modal/ModalChildren/ModalMic";
@@ -64,17 +63,6 @@ export const SearchCustom = (props: Props) => {
   });
 
   const [value, setValue] = useState<string>("");
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-  const { isListening, transcript, startListening, stopListening } =
-    useSpeechToText({
-      continuous: true,
-    });
-
-  const stopVoiceInput = () => {
-    setValueForm("search", transcript);
-    setValue(transcript);
-    stopListening();
-  };
 
   const handleRedirect = (search: string) => {
     switch (selectedSearch.value) {
@@ -174,16 +162,6 @@ export const SearchCustom = (props: Props) => {
                   />
                 </Combobox>
               </div>
-              <button
-                className="h-full"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsOpenModal(true);
-                  startListening();
-                }}
-              >
-                <MicIcon className="h-6 w-6" />
-              </button>
               <button className="h-full" type="submit">
                 <SearchIcon className="h-6 w-6" />
               </button>
@@ -208,20 +186,6 @@ export const SearchCustom = (props: Props) => {
         <BellIcon className="cursor-pointer [&>path]:stroke-black lg:hidden block" />
       </div> */}
       </div>
-
-      {isListening && (
-        <ModalMic
-          handleCloseModal={() => {
-            setIsOpenModal(false);
-            stopVoiceInput();
-            onSubmit({
-              search: transcript,
-            });
-          }}
-          isOpenModal={isOpenModal}
-          transcript={transcript}
-        />
-      )}
     </>
   );
 };
