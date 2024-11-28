@@ -110,7 +110,7 @@ export const ProductDetailRight = (props: Props) => {
         <Divider className="!my-0 md:block hidden" />
 
         <div className="flex gap-6 items-center">
-          <h2 className="text-primary font-bold xl:text-4xl text-2xl leading-12">
+          <h2 className="text-slate-900 font-bold xl:text-4xl text-2xl leading-12">
             {ConvertPrice(dataProductDetail.dongia)}
           </h2>
         </div>

@@ -28,7 +28,7 @@ interface Props {
 export const ButtonCustom = (props: Props) => {
   const {
     title,
-    backgroundColor = "bg-primary",
+    backgroundColor = "bg-gradient-to-r from-slate-800 to-zinc-800",
     color = "text-white",
     fontWeight = "font-medium",
     borderColor = "",
@@ -53,12 +53,11 @@ export const ButtonCustom = (props: Props) => {
 
     switch (variant) {
       case "contained":
-        classes =
-          "bg-primary text-white  active:bg-[#1f4fe099] disabled:bg-blue-20";
+        classes = `${backgroundColor} text-white  active:bg-[#1f4fe099] disabled:bg-blue-20`;
         break;
       case "outlined":
         classes =
-          "bg-white !text-primary disabled:bg-blue-20 border border-primary";
+          "bg-white text-slate-900 disabled:bg-blue-20 border border-slate-900";
         break;
       case "text":
         classes = "!text-primary bg-transparent";

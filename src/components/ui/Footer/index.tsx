@@ -20,13 +20,10 @@ export const listInformation: InformationType[] = [
     title: "Dịch vụ",
     contents: [
       {
-        name: "Bán xe",
-      },
-      {
-        name: "Thuê xe",
-      },
-      {
         name: "Sửa chữa",
+      },
+      {
+        name: "Trang trí",
       },
     ],
   },
@@ -74,16 +71,13 @@ export const listInformation: InformationType[] = [
     title: "Nhà cung cấp",
     contents: [
       {
-        name: "XEDAP.VN",
+        name: "Hải triều",
       },
       {
-        name: "GIANT",
+        name: "Shop Đồng hồ",
       },
       {
-        name: "MAXBIKE",
-      },
-      {
-        name: "VINBIKE",
+        name: "VINWATCH",
       },
     ],
   },

@@ -19,8 +19,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Xe đạp",
-  description: "Xe đạp Việt Nam",
+  title: "Đồng hồ",
+  description: "Đồng hồ chính hãng",
 };
 
 export default function RootLayout({

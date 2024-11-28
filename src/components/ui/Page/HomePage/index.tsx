@@ -19,20 +19,20 @@ const HomePage = () => {
         <BannerHome />
       </div>
 
-      <div className="w-full h-full pt-4 lg:pt-20  bg-gray-10">
+      <div className="w-full h-full pt-4 lg:pt-20">
         <SectionProduct
           products={listProduct as ProductType[]}
           title="Sản phẩm mới"
         />
       </div>
 
-      <div className="w-full h-full pt-4 lg:pt-20  bg-gray-10">
+      <div className="w-full h-full pt-4 lg:pt-20">
         <SectionProduct
           products={listBestSellerProduct as ProductType[]}
           title="Sản phẩm bán chạy nhất"
         />
       </div>
-      <div className="w-full h-full pt-4 lg:pt-20  bg-gray-10">
+      <div className="w-full h-full pt-4 lg:pt-20">
         <SectionProduct
           products={listProduct as ProductType[]}
           title="Sản phẩm khuyến mãi"

@@ -162,7 +162,7 @@ export const Navbar = () => {
                 return (
                   <div
                     key={item.value}
-                    className="flex gap-2 h-full cursor-pointer transition-all ease-in duration-200 hover:text-primary"
+                    className="flex gap-2 h-full cursor-pointer transition-all ease-in duration-200 hover:text-red-600"
                   >
                     <Link href={handleAction(item)}>
                       <p className="text-lg font-bold uppercase">
@@ -178,7 +178,7 @@ export const Navbar = () => {
                   key={item.value}
                   className={`group flex h-full cursor-pointer transition-all ease-in duration-200 relative after:content-[''] after:bg-transparent after:w-full after:h-[160%]  after:absolute after:top-0 after:right-0 after:left-0 after:bottom-0 ${
                     selectedNavbar === item.value ? "text-primary" : ""
-                  }  hover:text-primary`}
+                  }  hover:text-red-600`}
                   onHoverStart={() => {
                     setSelectedNavbar(item.value);
                     toggleHover(true);
@@ -208,7 +208,7 @@ export const Navbar = () => {
                       return (
                         <Link
                           key={sub.value}
-                          className={`text-black  hover:bg-primary hover:text-white
+                          className={`text-black  hover:bg-gradient-to-r from-neutral-800 to-zinc-800 hover:text-white
                                group flex items-center rounded-tl-md rounded-tr-md text-sm px-6 py-4 w-[180px]`}
                           href={handleRedirectSubMenu(item, sub)}
                         >

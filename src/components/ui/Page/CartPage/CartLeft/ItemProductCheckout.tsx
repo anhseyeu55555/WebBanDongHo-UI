@@ -137,7 +137,7 @@ export const ItemProductCheckout = (props: Props) => {
       </div>
 
       <div
-        className={`${styleTextItem} text-primary w-[12%] lg:px-0 px-[26px]  whitespace-nowrap`}
+        className={`${styleTextItem} text-red-600 w-[12%] lg:px-0 px-[26px]  whitespace-nowrap`}
       >
         {ConvertPrice(item.sanpham.dongia * item.soluong)}
       </div>

@@ -7,18 +7,10 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { listDropDownSearch, SearchValueType } from "@/constant/header";
-import { toLowerCaseNonAccentVietnamese } from "@/helpers/handleRemoveAccents";
 import { OptionSelect } from "@/types/select";
 
-import {
-  ChevronDownBoldIcon,
-  MicIcon,
-  SearchIcon,
-} from "../../../public/icons";
+import { SearchIcon } from "../../../public/icons";
 import CartIcon from "../ui/Header/CartIcon";
-import { ImageCustom } from "../ui/ImageCustom";
-import { ModalMic } from "../ui/Modal/ModalChildren/ModalMic";
-import { ButtonCustom } from "./ButtonCustom";
 import { DropdownCustom } from "./DropDownCustom";
 
 interface Props {

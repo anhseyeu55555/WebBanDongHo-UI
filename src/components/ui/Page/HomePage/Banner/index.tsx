@@ -15,15 +15,15 @@ interface ImageCarouselType {
 const listImageCarousels: ImageCarouselType[] = [
   {
     title: "banner-1",
-    image: "/images/banner-xe-dap-3.png",
+    image: "/images/banner-1.png",
   },
   {
     title: "banner-2",
-    image: "/images/banner-xe-dap-3.png",
+    image: "/images/banner-2.png",
   },
   {
     title: "banner-3",
-    image: "/images/banner-xe-dap-3.png",
+    image: "/images/banner-3.png",
   },
 ];
 export const BannerHome = () => {

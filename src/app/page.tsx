@@ -12,8 +12,8 @@ import getQueryClient from "@/utils/react-query/getQueryClient";
 import ReactQueryHydrate from "@/utils/react-query/hydrate.client";
 
 export const metadata: Metadata = {
-  title: "Trang chủ - Xe đạp",
-  description: "Xe đạp Việt Nam",
+  title: "Trang chủ - Đồng hồ",
+  description: "Đồng hồ chính hãng",
 };
 
 export default async function Home() {

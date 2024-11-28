@@ -105,7 +105,7 @@ export const ProductItem = (props: Props) => {
 
           <div className="flex justify-center lg:justify-end">
             <button
-              className="bg-primary px-4 py-2 rounded-lg text-white text-base font-medium"
+              className="bg-gradient-to-r from-slate-800 to-gray-800 px-4 py-2 rounded-lg text-white text-base font-medium"
               onClick={handleBuy}
             >
               Mua ngay
