@@ -93,7 +93,7 @@ export const ProductDetailRight = (props: Props) => {
               <CartIcon />
             </div>
 
-            <p className="text-md">Thêm vào giỏ hàng</p>
+            <p className="text-md text-slate-900">Thêm vào giỏ hàng</p>
           </ButtonCustom>
         </div>
       </>
